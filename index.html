@@ -1,0 +1,1793 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Apprendre les kanji, le vocabulaire et la grammaire du japonais, du JLPT N5 au N1.">
+<meta name="theme-color" content="#FFFBF3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#283043" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Kanji">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+<title>Kanji</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Klee+One:wght@400;600&family=Shippori+Mincho+B1:wght@600;700;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: a cosy garden journey — home scene with the mascot, daily quests and a five-region map (N5→N1); study views sit on soft paper panels with chunky game buttons. */
+:root{
+  --bg:#EBF1E2; --panel:#FFFBF3; --panel-2:#F5EEDF; --edge:#E2D6BF; --shade:#D5C6AA;
+  --ink:#3B2F29; --ink-2:#7B6B5F;
+  --leaf:#5E9E5B; --leaf-deep:#3F7C3F; --leaf-soft:#DDEBD3; --on-leaf:#FFFFFF;
+  --sakura:#EE9DB0; --sakura-soft:#FBE3E8; --amber:#EDAE3E; --amber-soft:#FBEBC8;
+  --sky-a:#BFE3EC; --sky-b:#EEF6EA; --hill-1:#A9CF8E; --hill-2:#8CBE77; --hill-3:#C8DFB0; --mount:#C9D9DC;
+  --wood:#9C7458; --roof:#B5584A; --white:#FFFFFF;
+  --guide:#E7B0A6; --ghost:#E5DDCD; --hint:#5C86C4;
+  --ok:#3E8A4A; --ok-soft:#DCEFD9; --ko:#C2493D; --ko-soft:#F8E0DA;
+  --r5:#EE9DB0; --r4:#6FB06A; --r3:#6AAED0; --r2:#E9A23B; --r1:#9A86CF;
+  --night:0;
+  --f-disp:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-ui:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,-apple-system,sans-serif;
+  --f-kanji:"Klee One","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#1C2231; --panel:#283043; --panel-2:#2F384D; --edge:#3B4560; --shade:#141925;
+  --ink:#F3ECDF; --ink-2:#B4AB9C;
+  --leaf:#8CCB86; --leaf-deep:#A6DB9F; --leaf-soft:#25382C; --on-leaf:#14201A;
+  --sakura:#E894AA; --sakura-soft:#43293A; --amber:#F3C25F; --amber-soft:#43391F;
+  --sky-a:#1A2442; --sky-b:#33406A; --hill-1:#2C4A3B; --hill-2:#233E31; --hill-3:#355544; --mount:#2B3656;
+  --wood:#6B5040; --roof:#8C4A43; --white:#F3ECDF;
+  --guide:#6D4741; --ghost:#3A4359; --hint:#86A9E4;
+  --ok:#7FCC8A; --ok-soft:#1F3829; --ko:#F08A7E; --ko-soft:#44261F;
+  --night:1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1C2231; --panel:#283043; --panel-2:#2F384D; --edge:#3B4560; --shade:#141925;
+  --ink:#F3ECDF; --ink-2:#B4AB9C;
+  --leaf:#8CCB86; --leaf-deep:#A6DB9F; --leaf-soft:#25382C; --on-leaf:#14201A;
+  --sakura:#E894AA; --sakura-soft:#43293A; --amber:#F3C25F; --amber-soft:#43391F;
+  --sky-a:#1A2442; --sky-b:#33406A; --hill-1:#2C4A3B; --hill-2:#233E31; --hill-3:#355544; --mount:#2B3656;
+  --wood:#6B5040; --roof:#8C4A43; --white:#F3ECDF;
+  --guide:#6D4741; --ghost:#3A4359; --hint:#86A9E4;
+  --ok:#7FCC8A; --ok-soft:#1F3829; --ko:#F08A7E; --ko-soft:#44261F;
+  --night:1; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--f-ui);font-weight:500;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--panel)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:10px}
+.kj{font-family:var(--f-kanji)}
+.disp{font-family:var(--f-disp);font-weight:800}
+.muted{color:var(--ink-2)}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{margin:0;text-wrap:balance;font-family:var(--f-disp);font-weight:800;letter-spacing:.01em}
+h2{font-size:22px} h3{font-size:17px}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:6;background:var(--panel);border-bottom:2px solid var(--edge)}
+.hd{display:flex;align-items:center;gap:14px;padding-block:8px}
+.brand{display:flex;align-items:center;gap:10px;margin-right:auto;text-decoration:none;color:inherit}
+.brand .logo{width:38px;height:38px}
+.brand b{font:800 18px/1.1 var(--f-disp)}
+.hud{display:flex;align-items:center;gap:8px}
+.pill{display:inline-flex;align-items:center;gap:6px;background:var(--panel-2);border:2px solid var(--edge);border-radius:999px;padding:3px 10px 3px 4px;font-weight:800;font-size:13.5px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill .ic{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none}
+.pill .ic svg{width:14px;height:14px}
+nav.tabs{display:flex;gap:4px}
+nav.tabs a{display:flex;align-items:center;gap:7px;padding:7px 12px;border-radius:12px;color:var(--ink-2);text-decoration:none;font-weight:700}
+nav.tabs a svg{width:20px;height:20px}
+nav.tabs a[aria-current="page"]{background:var(--leaf-soft);color:var(--leaf-deep)}
+nav.tabs a:hover{color:var(--ink)}
+nav.tabs{display:none!important}
+main{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
+nav.bottom{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:6;background:var(--panel);border-top:2px solid var(--edge);justify-content:center;padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px))}
+nav.bottom a{flex:1;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:1px;font-size:11.5px;font-weight:700;color:var(--ink-2);text-decoration:none;padding:4px 2px;border-radius:12px;min-width:0}
+nav.bottom a svg{width:24px;height:24px}
+nav.bottom a[aria-current="page"]{color:var(--leaf-deep);background:var(--leaf-soft)}
+
+main{padding-block:20px 64px}
+.view{display:flex;flex-direction:column;gap:20px}
+
+/* panels & buttons */
+.panel{background:var(--panel);border:2px solid var(--edge);border-radius:20px;box-shadow:0 4px 0 var(--shade)}
+.pad{padding:18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid var(--edge);background:var(--panel);border-radius:14px;padding:8px 16px;font-weight:800;font-size:14.5px;min-height:44px;box-shadow:0 3px 0 var(--shade);transition:transform .08s,box-shadow .08s;text-decoration:none;color:var(--ink)}
+.btn:hover{background:var(--panel-2)}
+.btn:active{transform:translateY(3px);box-shadow:0 0 0 var(--shade)}
+.btn.go{background:var(--leaf);border-color:var(--leaf-deep);color:var(--on-leaf);box-shadow:0 3px 0 var(--leaf-deep)}
+.btn.go:hover{filter:brightness(1.05)}
+.btn.big{font-size:17px;padding:12px 22px;min-height:54px;border-radius:16px}
+.btn[disabled]{opacity:.45;cursor:not-allowed;transform:none}
+.btn svg{width:18px;height:18px;flex:none}
+.seg{display:inline-flex;background:var(--panel-2);border:2px solid var(--edge);border-radius:14px;padding:3px;gap:3px}
+.seg button{border:0;background:none;padding:6px 12px;border-radius:10px;font-weight:800;font-size:13.5px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--panel);color:var(--ink);box-shadow:0 2px 0 var(--shade)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kbd{font:800 11px/1 var(--f-ui);border:1.5px solid var(--edge);border-bottom-width:3px;border-radius:5px;padding:2px 5px;color:var(--ink-2)}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2)}
+.bar{height:10px;border-radius:6px;background:var(--panel-2);border:1.5px solid var(--edge);overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+
+/* ---------- HOME ---------- */
+.scene{position:relative;overflow:hidden;padding:0}
+.scene svg.land{display:block;width:100%;height:auto;min-height:200px}
+.land .sky-a{stop-color:var(--sky-a)} .land .sky-b{stop-color:var(--sky-b)}
+.land .mount{fill:var(--mount)} .land .h1{fill:var(--hill-1)} .land .h2{fill:var(--hill-2)} .land .h3{fill:var(--hill-3)}
+.land .day{opacity:calc(1 - var(--night))} .land .night{opacity:var(--night)}
+.land .sun{fill:var(--amber)} .land .moon{fill:var(--white)} .land .star{fill:var(--white)}
+.land .wood{fill:var(--wood)} .land .roof{fill:var(--roof)} .land .wall{fill:var(--panel)} .land .win{fill:var(--amber)}
+.land .bloom{fill:var(--sakura)} .land .leafy{fill:var(--hill-2)} .land .core{fill:var(--amber)} .land .sprout{stroke:var(--leaf-deep);stroke-width:2;fill:none;stroke-linecap:round}
+.land .fly{fill:var(--amber)}
+.land .cloud{fill:var(--white);opacity:calc(.85 - var(--night)*.75)}
+.mochi .body{fill:var(--white);stroke:var(--ink);stroke-width:2.2}
+.mochi .eye{fill:var(--ink)} .mochi .blush{fill:var(--sakura)} .mochi .leaf{fill:var(--leaf)} .mochi .mouth{fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round}
+@media (prefers-reduced-motion:no-preference){
+  .mochi{animation:bob 3.2s ease-in-out infinite;transform-box:fill-box;transform-origin:50% 100%}
+  .land .cloud{animation:drift 40s linear infinite}
+  .land .fly{animation:glow 2.6s ease-in-out infinite}
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes drift{from{transform:translateX(-60px)}to{transform:translateX(60px)}}
+@keyframes glow{0%,100%{opacity:.25}50%{opacity:1}}
+.bubble{position:absolute;left:clamp(16px,4%,40px);top:clamp(14px,6%,30px);max-width:min(440px,62%);background:var(--panel);border:2px solid var(--edge);border-radius:18px;padding:12px 16px;box-shadow:0 3px 0 var(--shade)}
+.bubble h1{font-size:clamp(20px,3vw,26px);margin-bottom:4px}
+.bubble p{margin:0;font-size:14.5px}
+.bubble::after{content:"";position:absolute;bottom:-11px;right:46px;width:18px;height:18px;background:var(--panel);border-right:2px solid var(--edge);border-bottom:2px solid var(--edge);transform:rotate(45deg)}
+@media (max-width:620px){.bubble{position:static;max-width:none;margin:12px 12px 0;border-radius:16px}.bubble::after{display:none}}
+
+.home-row{display:grid;grid-template-columns:1.05fr 1.2fr 1fr;gap:16px}
+@media (max-width:980px){.home-row{grid-template-columns:1fr 1fr}.home-row .cont{grid-column:1/-1}}
+@media (max-width:640px){.home-row{grid-template-columns:1fr}}
+.me{display:flex;flex-direction:column;gap:12px}
+.me-top{display:flex;gap:12px;align-items:center}
+.badge-lv{width:58px;height:58px;border-radius:18px;background:var(--amber-soft);border:2px solid var(--amber);display:grid;place-items:center;font:800 24px/1 var(--f-disp);color:var(--ink);flex:none}
+.me-top b{display:block;font:800 18px/1.2 var(--f-disp)}
+.kv{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kv div{background:var(--panel-2);border-radius:12px;padding:8px 10px;min-width:0}
+.kv b{display:block;font:800 20px/1.1 var(--f-disp);font-variant-numeric:tabular-nums}
+.kv span{font-size:12px;color:var(--ink-2)}
+.quests{display:flex;flex-direction:column;gap:10px}
+.quest{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center}
+.quest .qi{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:var(--panel-2);border:2px solid var(--edge)}
+.quest .qi svg{width:20px;height:20px}
+.quest.done .qi{background:var(--leaf);border-color:var(--leaf-deep);color:var(--on-leaf)}
+.quest .qt{font-weight:700;font-size:14px;line-height:1.3}
+.quest .bar{height:8px;margin-top:4px}
+.quest .qn{font-weight:800;font-size:13px;font-variant-numeric:tabular-nums;color:var(--ink-2)}
+.cont{display:flex;flex-direction:column;gap:10px;justify-content:space-between}
+.cont .stage-big{display:flex;gap:12px;align-items:center}
+.cont .stage-big .kj{font-size:40px;line-height:1;width:64px;height:64px;border-radius:16px;display:grid;place-items:center;background:var(--panel-2);border:2px solid var(--edge)}
+
+.map{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.map::before{content:"";position:absolute;left:8%;right:8%;top:62px;border-top:4px dotted var(--edge);z-index:0}
+@media (max-width:900px){.map{grid-template-columns:1fr 1fr}.map::before{display:none}}
+@media (max-width:480px){.map{grid-template-columns:1fr}}
+.region{position:relative;z-index:1;text-align:left;border:2px solid var(--edge);background:var(--panel);border-radius:20px;box-shadow:0 4px 0 var(--shade);padding:14px;display:flex;flex-direction:column;gap:8px;transition:transform .12s}
+.region:hover{transform:translateY(-3px)}
+.region .medal{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font:600 40px/1 var(--f-kanji);color:var(--ink);background:var(--panel-2);border:4px solid var(--rc);margin:0 auto 2px}
+.region .lv{display:inline-block;font:800 13px/1 var(--f-disp);background:var(--rc);color:var(--ink);padding:5px 9px;border-radius:999px;align-self:center}
+.region b{font:800 16px/1.25 var(--f-disp);text-align:center}
+.region .desc{font-size:12.5px;color:var(--ink-2);text-align:center;line-height:1.4}
+.region .nums{display:flex;justify-content:space-between;font-size:12.5px;font-weight:700;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.region[aria-current="true"]{border-color:var(--rc);box-shadow:0 4px 0 var(--rc)}
+
+/* ---------- KANJI (level) ---------- */
+.reg-tabs{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.reg-tab{flex:none;display:flex;align-items:center;gap:8px;border:2px solid var(--edge);background:var(--panel);border-radius:14px;padding:6px 12px 6px 6px;font-weight:800;box-shadow:0 3px 0 var(--shade)}
+.reg-tab .kj{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--panel-2);border:2.5px solid var(--rc);font-size:17px;font-weight:600}
+.reg-tab[aria-pressed="true"]{background:var(--rc);border-color:var(--rc);box-shadow:0 3px 0 var(--shade);color:var(--ink)}
+.reg-tab[aria-pressed="true"] .kj{background:var(--panel)}
+.banner{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.banner .medal{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font:600 46px/1 var(--f-kanji);background:var(--panel-2);border:5px solid var(--rc)}
+@media (max-width:700px){.banner{grid-template-columns:auto 1fr}.banner .acts{grid-column:1/-1}.banner .medal{width:64px;height:64px;font-size:34px;border-width:4px}}
+.stages{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 10px;scroll-snap-type:x proximity}
+.stage{flex:none;scroll-snap-align:start;min-width:118px;border:2px solid var(--edge);background:var(--panel);border-radius:16px;padding:8px 12px;text-align:left;box-shadow:0 3px 0 var(--shade)}
+.stage b{display:block;font-weight:800;font-size:14px;white-space:nowrap}
+.stage .ks{font:400 15px/1.3 var(--f-kanji);color:var(--ink-2);white-space:nowrap;overflow:hidden;max-width:150px;text-overflow:ellipsis}
+.stage .stars{display:flex;gap:2px;margin-top:3px}
+.stars svg{width:15px;height:15px}
+.stars .on{fill:var(--amber)} .stars .off{fill:var(--panel-2);stroke:var(--edge);stroke-width:1.5}
+.stage[aria-pressed="true"]{border-color:var(--leaf-deep);background:var(--leaf-soft)}
+.play{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.play button{display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;border:2px solid var(--edge);background:var(--panel);border-radius:18px;box-shadow:0 4px 0 var(--shade)}
+.play button:active{transform:translateY(3px);box-shadow:0 1px 0 var(--shade)}
+.play .pic{width:46px;height:46px;border-radius:14px;display:grid;place-items:center;flex:none;font:600 26px/1 var(--f-kanji)}
+.play b{display:block;font:800 16px/1.2 var(--f-disp)}
+.play small{color:var(--ink-2);font-size:12.5px}
+@media (max-width:640px){.play{grid-template-columns:1fr}}
+.tools{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.search{flex:1 1 240px;min-width:0;border:2px solid var(--edge);background:var(--panel);border-radius:14px;padding:10px 14px;font:inherit;color:var(--ink)}
+.legend{display:flex;gap:14px;font-size:13px;color:var(--ink-2);flex-wrap:wrap;font-weight:700}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:none}
+.dot.new{border:2px solid var(--ink-2)} .dot.learn{background:var(--amber)} .dot.known{background:var(--leaf)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:10px}
+.tile{position:relative;border:2px solid var(--edge);background:var(--panel);border-radius:16px;padding:10px 6px 8px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:0 3px 0 var(--shade);transition:transform .1s}
+.tile:hover{transform:translateY(-2px);border-color:var(--leaf)}
+.tile .kj{font-size:42px;line-height:1.15}
+.tile .m{font-size:12px;color:var(--ink-2);line-height:1.25;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:700}
+.tile .dot{position:absolute;top:8px;right:8px}
+.tile.known{background:var(--leaf-soft)}
+.empty{padding:36px 16px;text-align:center;color:var(--ink-2);border:2px dashed var(--edge);border-radius:18px}
+.loading{padding:60px 16px;text-align:center;color:var(--ink-2);font-weight:700}
+
+/* scope bar in activities */
+.scope{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.scope select,select{font:inherit;font-weight:700;color:var(--ink);background:var(--panel);border:2px solid var(--edge);border-radius:12px;padding:7px 10px;min-height:42px;max-width:100%}
+.scope .lbl{font-weight:800;font-size:13px;color:var(--ink-2)}
+
+/* practice square */
+.sq{display:block;width:100%;height:auto;background:var(--panel)}
+.sq .g-frame{fill:none;stroke:var(--guide);stroke-width:.9}
+.sq .g-dash{stroke:var(--guide);stroke-width:.55;stroke-dasharray:2 2}
+.sq path.stk{fill:none;stroke:var(--ink);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
+.sq .ghost path{fill:none;stroke:var(--ghost);stroke-width:4.4;stroke-linecap:round;stroke-linejoin:round}
+.sq .num{font:800 7px var(--f-ui);fill:var(--ko)}
+
+/* detail dialog */
+.ov{position:fixed;inset:0;z-index:20;background:rgb(20 16 12 / .45);display:grid;place-items:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.dlg{background:var(--panel);border:2px solid var(--edge);border-radius:24px;width:min(880px,100%);max-height:100%;overflow:auto;box-shadow:0 6px 0 var(--shade),0 30px 60px rgb(0 0 0 / .25);position:relative}
+.dlg-in{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:28px;padding:24px}
+@media (max-width:700px){.dlg-in{grid-template-columns:1fr;gap:18px;padding:18px}.dlg-left{max-width:280px;margin:0 auto;width:100%}}
+.x{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:2px solid var(--edge);background:var(--panel-2);display:grid;place-items:center;z-index:1}
+.x svg{width:18px;height:18px}
+.dlg-left .sq{border-radius:14px;border:2px solid var(--edge)}
+.dlg-left .row{margin-top:12px;justify-content:center}
+.meaning{font:800 24px/1.25 var(--f-disp);text-wrap:balance;padding-right:44px}
+.tag{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:800;padding:3px 10px;border-radius:999px;background:var(--panel-2);color:var(--ink-2);border:1.5px solid var(--edge)}
+.readings{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:16px 0;align-items:baseline}
+.readings dt{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.readings dd{margin:0;font-size:20px;font-weight:700}
+.ex{display:flex;flex-direction:column;border-top:2px dashed var(--edge);padding:0;margin:0}
+.ex li{list-style:none;display:grid;grid-template-columns:auto 1fr auto;gap:2px 14px;align-items:center;padding:10px 0;border-bottom:2px dashed var(--edge)}
+.ex .w{font:600 24px/1.2 var(--f-kanji);grid-row:span 2}
+.ex .r{font-size:14.5px;font-weight:700}
+.ex .s{font-size:13.5px;color:var(--ink-2);grid-column:2}
+.ex .en{font-size:10px;font-weight:800;border:1.5px solid var(--edge);border-radius:4px;padding:0 4px;margin-left:6px;vertical-align:1px}
+.speak{grid-row:span 2;width:38px;height:38px;border-radius:50%;border:2px solid var(--edge);background:var(--panel-2);display:grid;place-items:center;color:var(--ink-2)}
+.speak svg{width:17px;height:17px}
+.h3{font-size:12px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--ink-2);margin:20px 0 8px}
+.seq{display:grid;grid-template-columns:repeat(auto-fill,minmax(46px,1fr));gap:6px}
+.seq svg{border-radius:8px;border:1.5px solid var(--edge)}
+.seq path{fill:none;stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
+.seq .p{stroke:var(--ink-2);opacity:.5}
+.seq .c{stroke:var(--ko)}
+.seq .n{font:800 11px var(--f-ui);fill:var(--ink-2)}
+
+/* ---------- TRACE ---------- */
+.trace{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:780px){.trace{grid-template-columns:1fr}}
+.board-wrap{border-radius:22px;overflow:hidden;border:3px solid var(--edge);box-shadow:0 5px 0 var(--shade);touch-action:none;user-select:none;-webkit-user-select:none;background:var(--panel)}
+#board{cursor:crosshair}
+#board .live{fill:none;stroke:var(--leaf-deep);stroke-width:4.4;stroke-linecap:round;stroke-linejoin:round}
+#board .live.bad{stroke:var(--ko);transition:opacity .45s;opacity:0}
+#board .hint path{fill:none;stroke:var(--hint);stroke-width:4.4;stroke-linecap:round;opacity:.55}
+#board .start{fill:var(--ko)}
+#board .done path{fill:none;stroke:var(--ink);stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round}
+.board-tools{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.tr-head{display:flex;align-items:center;gap:14px}
+.tr-head .kj{font-size:52px;line-height:1;width:76px;height:76px;border-radius:20px;display:grid;place-items:center;background:var(--panel-2);border:2px solid var(--edge);flex:none}
+.tr-head .kj.hidden-k{color:transparent;background:repeating-linear-gradient(-45deg,var(--edge) 0 3px,var(--panel-2) 3px 9px)}
+.prog-strokes{display:flex;gap:5px;flex-wrap:wrap;margin:16px 0 6px}
+.prog-strokes i{width:24px;height:8px;border-radius:4px;background:var(--panel-2);border:1.5px solid var(--edge)}
+.prog-strokes i.d{background:var(--leaf);border-color:var(--leaf)}
+.prog-strokes i.e{background:var(--amber);border-color:var(--amber)}
+.prog-strokes i.c{background:var(--ink);border-color:var(--ink)}
+.fb{display:flex;gap:10px;align-items:center;min-height:56px;border-radius:16px;padding:10px 14px;font-weight:700;margin:12px 0;background:var(--panel-2);color:var(--ink-2)}
+.fb svg{width:34px;height:34px;flex:none}
+.fb.ok{background:var(--ok-soft);color:var(--ok)}
+.fb.ko{background:var(--ko-soft);color:var(--ko)}
+.fb.mid{background:var(--amber-soft);color:var(--ink)}
+.tips{font-size:13.5px;color:var(--ink-2);margin-top:16px;padding-top:12px;border-top:2px dashed var(--edge)}
+.tips p{margin:0 0 6px}
+
+/* ---------- CARDS ---------- */
+.stage-wrap{max-width:560px;margin:0 auto;width:100%}
+.counts{display:flex;gap:10px;flex-wrap:wrap}
+.card{perspective:1400px;width:100%;aspect-ratio:4/3;max-width:100%;cursor:pointer}
+.card-in{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.3,.7,.3,1.1);transform-style:preserve-3d}
+.card.flip .card-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--panel);border:3px solid var(--edge);border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;box-shadow:0 6px 0 var(--shade)}
+.face.back{transform:rotateY(180deg);justify-content:flex-start;overflow:auto}
+.face .big{font:800 clamp(96px,26vw,150px)/1 var(--f-kanji)}
+.face .q{font:400 clamp(22px,5.5vw,30px)/1.3 var(--f-disp);text-wrap:balance}
+.face .ftag{position:absolute;top:14px;left:16px}
+.face .tap{position:absolute;bottom:14px;font-size:13px;color:var(--ink-2);font-weight:700}
+.back-top{display:flex;align-items:center;gap:16px;width:100%;justify-content:center;margin-top:8px}
+.back-top .kj{font-size:72px;line-height:1}
+.back-top .meaning{padding:0;text-align:left;font-size:20px}
+.back .rd{font-size:16px;margin-top:4px;text-align:left;font-weight:700}
+.back .rd span{color:var(--ink-2);font-size:11px;letter-spacing:.06em;margin-right:6px;font-weight:800}
+.back .exs{margin-top:14px;font-size:14px;color:var(--ink-2);display:flex;flex-direction:column;gap:3px}
+.back .exs b{color:var(--ink);font:600 18px var(--f-kanji);margin-right:6px}
+.grades{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.grades .btn{flex-direction:column;gap:0;padding:8px 6px;min-height:58px}
+.grades .btn small{font-weight:700;font-size:12px;opacity:.8}
+.g-again{background:var(--ko-soft)!important;border-color:var(--ko)!important;color:var(--ko)!important}
+.g-hard{background:var(--amber-soft)!important;border-color:var(--amber)!important}
+.g-good{background:var(--ok-soft)!important;border-color:var(--ok)!important;color:var(--ok)!important}
+.done-box{text-align:center;padding:30px 20px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.done-box .mascot{width:120px;height:auto}
+.done-box p{margin:0 0 6px;max-width:44ch}
+
+/* ---------- QUIZ ---------- */
+.quiz{max-width:640px;margin:0 auto;width:100%;display:flex;flex-direction:column;gap:14px}
+.qbar{display:flex;gap:5px}
+.qbar i{flex:1;height:10px;border-radius:5px;background:var(--panel-2);border:1.5px solid var(--edge)}
+.qbar i.ok{background:var(--leaf);border-color:var(--leaf)} .qbar i.ko{background:var(--ko);border-color:var(--ko)} .qbar i.cur{background:var(--amber);border-color:var(--amber)}
+.prompt{text-align:center;padding:24px 18px}
+.prompt .ask{font-size:12.5px;font-weight:800;color:var(--ink-2);letter-spacing:.06em;text-transform:uppercase}
+.prompt .kj.big{font-size:100px;line-height:1.15}
+.prompt .word{font:600 54px/1.2 var(--f-kanji);margin-top:6px}
+.prompt .txt{font:800 26px/1.3 var(--f-disp);margin-top:8px;text-wrap:balance}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:2px solid var(--edge);background:var(--panel);border-radius:16px;padding:12px;font-size:16px;font-weight:700;text-align:left;display:flex;gap:10px;align-items:center;min-height:60px;box-shadow:0 3px 0 var(--shade)}
+.opt .k{font-size:12px;color:var(--ink-2);border:1.5px solid var(--edge);border-radius:6px;width:22px;height:22px;display:grid;place-items:center;flex:none;font-weight:800}
+.opt.kj-opt{font:400 36px/1 var(--f-kanji);justify-content:center}
+.opt.kj-opt .k{font-family:var(--f-ui)}
+.opt.jp-opt{font-size:18px}
+.opt:hover:not([disabled]){border-color:var(--leaf)}
+.opt.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.opt.ko{background:var(--ko-soft);border-color:var(--ko);color:var(--ko)}
+.opt[disabled]{cursor:default}
+.qfoot{display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:48px;flex-wrap:wrap}
+.score{font:800 56px/1 var(--f-disp);font-variant-numeric:tabular-nums}
+.miss{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.miss button{border:2px solid var(--edge);background:var(--panel);border-radius:12px;padding:6px 10px;display:flex;align-items:center;gap:8px;font-weight:700}
+.miss .kj{font-size:26px}
+@media (max-width:440px){.opts{grid-template-columns:1fr}}
+
+/* toasts */
+.toasts{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:30;display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
+@media all{.toasts{bottom:calc(88px + env(safe-area-inset-bottom,0px))}}
+.toast{background:var(--panel);border:2px solid var(--amber);border-radius:14px;padding:8px 14px;font-weight:800;box-shadow:0 3px 0 var(--shade);display:flex;align-items:center;gap:8px}
+.toast svg{width:20px;height:20px}
+@media (prefers-reduced-motion:no-preference){.toast{animation:pop .35s cubic-bezier(.3,1.4,.5,1)}}
+@keyframes pop{from{transform:translateY(12px) scale(.9);opacity:0}}
+@media (prefers-reduced-motion:reduce){.card-in{transition:none}#board .live.bad{transition:none}.region,.tile{transition:none}}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* phone-first single column */
+.home-row{grid-template-columns:1fr!important}
+.home-row .cont{grid-column:auto;order:-1}
+.map{grid-template-columns:1fr!important;gap:12px}.map::before{display:none}
+.region{display:grid;grid-template-columns:auto 1fr;gap:3px 14px;align-items:center}
+.region:hover{transform:none}
+.region .medal{grid-row:span 5;margin:0;width:64px;height:64px;font-size:34px;border-width:3px}
+.region .lv{justify-self:start;align-self:end}
+.region b,.region .desc{text-align:left}
+.trace{grid-template-columns:1fr!important}
+.play{grid-template-columns:1fr!important}
+.banner{grid-template-columns:auto 1fr!important}.banner .acts{display:none}
+.banner .medal{width:64px;height:64px;font-size:34px;border-width:4px}
+header .hd{padding-block:10px}
+
+/* profile */
+.prof-top{display:flex;gap:14px;align-items:center}
+.avatar{width:72px;height:72px;border-radius:24px;background:var(--leaf-soft);border:3px solid var(--leaf);display:grid;place-items:center;font:800 34px/1 var(--f-disp);color:var(--leaf-deep);flex:none}
+.name-in{width:100%;border:2px solid var(--edge);background:var(--panel-2);border-radius:12px;padding:7px 10px;font:800 18px var(--f-disp);color:var(--ink)}
+.sgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.sgrid div{background:var(--panel-2);border-radius:14px;padding:10px 12px}
+.sgrid b{display:block;font:800 24px/1.1 var(--f-disp);font-variant-numeric:tabular-nums}
+.sgrid span{font-size:12.5px;color:var(--ink-2);font-weight:700}
+.lvrow{display:grid;grid-template-columns:42px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-bottom:2px dashed var(--edge)}
+.lvrow:last-child{border-bottom:0}
+.lvrow .kj{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:22px;font-weight:600;background:var(--panel-2);border:3px solid var(--rc)}
+.lvrow .n{font-size:13px;font-weight:800;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.ranks{display:flex;flex-direction:column;gap:8px}
+.rank{display:flex;align-items:center;gap:10px;font-weight:700}
+.rank .rb{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;font:800 14px/1 var(--f-disp);background:var(--panel-2);border:2px solid var(--edge);flex:none}
+.rank.on .rb{background:var(--amber-soft);border-color:var(--amber)}
+.rank.off{color:var(--ink-2);opacity:.7}
+.rank.cur{color:var(--ink)}
+.rank .rt{margin-left:auto;font-size:12px;color:var(--ink-2);font-weight:800}
+.set{display:flex;flex-direction:column;gap:14px}
+.set .line{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.danger{border-color:var(--ko)!important;color:var(--ko)!important}
+.confirm{background:var(--ko-soft);border-radius:14px;padding:12px;color:var(--ink)}
+/* subnav, vocab */
+.subnav{display:flex;background:var(--panel-2);border:2px solid var(--edge);border-radius:16px;padding:4px;gap:4px}
+.subnav a{flex:1;text-align:center;padding:8px 4px;border-radius:12px;font-weight:800;color:var(--ink-2);text-decoration:none;font-size:14.5px}
+.subnav a[aria-current="page"]{background:var(--panel);color:var(--ink);box-shadow:0 2px 0 var(--shade)}
+.view > .search{flex:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{border:2px solid var(--edge);background:var(--panel);border-radius:999px;padding:5px 12px;font-weight:800;font-size:13.5px}
+.chip[aria-pressed="true"]{background:var(--leaf);border-color:var(--leaf-deep);color:var(--on-leaf)}
+.chip .n{opacity:.75;margin-left:5px;font-variant-numeric:tabular-nums}
+.wlist{display:flex;flex-direction:column;gap:8px}
+.wrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr) auto;gap:12px;align-items:center;text-align:left;border:2px solid var(--edge);background:var(--panel);border-radius:14px;padding:8px 12px;box-shadow:0 2px 0 var(--shade)}
+.wrow.known{background:var(--leaf-soft)}
+.wrow .ww{display:flex;flex-direction:column;min-width:0}
+.wrow .ww .kj{font-size:21px;line-height:1.25;font-weight:600;overflow-wrap:anywhere}
+.wrow .ww small{font-size:12.5px;color:var(--ink-2);font-weight:700;overflow-wrap:anywhere}
+.wrow .wm{font-size:14px;font-weight:700;color:var(--ink-2);min-width:0;overflow-wrap:anywhere}
+.wdlg{padding:30px 20px 24px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.wbig{font-size:clamp(44px,13vw,64px);line-height:1.15;font-weight:600;overflow-wrap:anywhere;max-width:100%}
+.wread{font-size:20px;font-weight:800;display:flex;align-items:center;gap:10px;margin-top:4px}
+.wread .speak{grid-row:auto}
+.wk{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.wk button{border:2px solid var(--edge);background:var(--panel-2);border-radius:14px;padding:6px 12px;display:flex;flex-direction:column;align-items:center;font-weight:800;font-size:12px;box-shadow:0 2px 0 var(--shade)}
+.wk .kj{font-size:30px;line-height:1.1;font-weight:600}
+.en-tag{font:800 10px/1 var(--f-ui);border:1.5px solid var(--edge);border-radius:4px;padding:2px 4px;margin-left:8px;vertical-align:4px;color:var(--ink-2)}
+.dlg:has(.wdlg){width:min(520px,100%)}
+/* level tabs: full width, slim */
+.reg-tabs{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:6px;overflow:visible;padding-bottom:0}
+.reg-tab{justify-content:center;gap:5px;padding:3px 4px;min-height:34px;border-radius:11px;font-size:13px;box-shadow:0 2px 0 var(--shade);min-width:0}
+.reg-tab .kj{width:22px;height:22px;font-size:13px;border-width:2px}
+.reg-tab[disabled]{opacity:.4;cursor:not-allowed;box-shadow:none}
+@media (max-width:360px){.reg-tab .kj{display:none}}
+/* grammar */
+.grow .gp{font-size:17px;font-weight:800;line-height:1.3;overflow-wrap:anywhere}
+.gdlg{padding:28px 20px 22px}
+.gbig{font:800 clamp(24px,7vw,32px)/1.25 var(--f-ui);overflow-wrap:anywhere;padding-right:40px}
+.face .gbig{padding:0}
+.form-box{background:var(--panel-2);border:2px dashed var(--edge);border-radius:12px;padding:10px 12px;font-weight:700;overflow-wrap:anywhere}
+.gnote{margin:10px 0 0;color:var(--ink-2);font-size:14px}
+.gex{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px}
+.gex li{background:var(--panel-2);border-radius:14px;padding:10px 12px}
+.gj{font:600 20px/1.45 var(--f-kanji);overflow-wrap:anywhere}
+.gj.big{font-size:24px;margin-top:8px}
+.gj mark{background:var(--amber-soft);color:inherit;border-bottom:3px solid var(--amber);border-radius:3px;padding:0 2px}
+.gk{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-2);font-weight:700;margin-top:2px}
+.gk .speak{width:30px;height:30px;grid-row:auto}
+.gf{font-size:14px;font-weight:700;margin-top:4px}
+.blank{display:inline-block;min-width:3em;border-bottom:3px solid var(--leaf);color:var(--leaf-deep);text-align:center;font-family:var(--f-ui);font-weight:800}
+.tchips{display:flex;flex-wrap:wrap;gap:8px}
+.tcard{position:relative;overflow:hidden;display:inline-flex;align-items:baseline;gap:6px;border:2px solid var(--edge);background:var(--panel);border-radius:999px;padding:5px 12px 7px;font-weight:800;font-size:13.5px}
+.tcard .tn{font-size:12px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.tcard .tb{position:absolute;left:0;right:0;bottom:0;height:3px;display:flex;background:var(--panel-2)}
+.tcard .tb i{display:block;height:100%}
+.tcard[aria-pressed="true"]{border-color:var(--leaf-deep);background:var(--leaf-soft)}
+.tcard[aria-pressed="true"] .tn{color:var(--leaf-deep)}
+</style>
+</head>
+<body>
+
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 10v9.5h13V10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M10 19.5v-5h4v5" fill="none" stroke="currentColor" stroke-width="2.2"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5.5C6.5 4.5 9.5 4.5 12 6c2.5-1.5 5.5-1.5 8-.5v13c-2.5-1-5.5-1-8 .5-2.5-1.5-5.5-1.5-8-.5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M12 6v13" stroke="currentColor" stroke-width="2.2"/></symbol>
+    <symbol id="i-brush" viewBox="0 0 24 24"><path d="M14.5 4.5l5 5-8 8-5-5z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M6.5 12.5c-2 .5-3 2-3 4 0 1.5-.5 2.5-1.5 3 3 .5 6.5 0 8-3" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-cards" viewBox="0 0 24 24"><rect x="7" y="3.5" width="12" height="16" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4.5 7v11.5a2.5 2.5 0 0 0 2.5 2.5h8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.6v.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="12" cy="17" r="1.3" fill="currentColor"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9z"/></symbol>
+    <symbol id="i-lantern" viewBox="0 0 24 24"><path d="M9 3h6M12 3v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><ellipse cx="12" cy="12.5" rx="6" ry="7" fill="currentColor"/><path d="M9 20.5h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19C5 10 10 5 20 4c-.5 10-5.5 15-14 15z" fill="currentColor"/><path d="M5 19l8-8" stroke="var(--panel)" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-speak" viewBox="0 0 24 24"><path d="M11 5 6 9H3v6h3l5 4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-replay" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.4 1 1.1 1 1.8V16h5v-.3c0-.7.4-1.4 1-1.8A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l12.5-7.5z" fill="currentColor"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8.5" r="4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M4.5 20c.8-4 3.8-6 7.5-6s6.7 2 7.5 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-words" viewBox="0 0 24 24"><path d="M4 5.5h16v10H11l-5 4v-4H4z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M8.5 9.5h7M8.5 12.5h4.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="i-gram" viewBox="0 0 24 24"><path d="M6 3.5h9l4 4v13H6z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M9 11h7M9 14.5h7M9 18h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></symbol>
+    <symbol id="mochi" viewBox="0 0 120 110">
+      <g class="mochi">
+        <path class="body" d="M22 52 L26 24 L44 40 Q60 34 76 40 L94 24 L98 52 Q108 70 100 88 Q90 104 60 104 Q30 104 20 88 Q12 70 22 52Z"/>
+        <path class="leaf" d="M58 37 Q54 22 66 14 Q70 28 58 37Z"/>
+        <ellipse class="eye" cx="46" cy="66" rx="4.2" ry="5.5"/><ellipse class="eye" cx="74" cy="66" rx="4.2" ry="5.5"/>
+        <circle cx="47.5" cy="64" r="1.5" fill="#fff"/><circle cx="75.5" cy="64" r="1.5" fill="#fff"/>
+        <ellipse class="blush" cx="36" cy="77" rx="6" ry="3.5"/><ellipse class="blush" cx="84" cy="77" rx="6" ry="3.5"/>
+        <path class="mouth" d="M54 76 Q57 80 60 76 Q63 80 66 76"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="wrap hd">
+    <a class="brand" href="#accueil" aria-label="Kanji, accueil">
+      <svg class="logo" viewBox="0 0 120 110" aria-hidden="true"><use href="#mochi"/></svg>
+      <b>Kanji</b>
+    </a>
+    <nav class="tabs" aria-label="Navigation">
+      <a href="#accueil" data-v="accueil"><svg><use href="#i-home"/></svg>Accueil</a>
+  <a href="#kanji" data-v="kanji"><svg><use href="#i-book"/></svg>Kanji</a>
+  <a href="#vocab" data-v="vocab"><svg><use href="#i-words"/></svg>Vocabulaire</a>
+  <a href="#grammaire" data-v="grammaire"><svg><use href="#i-gram"/></svg>Grammaire</a>
+  <a href="#profil" data-v="profil"><svg><use href="#i-user"/></svg>Profil</a>
+    </nav>
+    <div class="hud" id="hud"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="view" id="v-accueil"></section>
+  <section class="view" id="v-kanji" hidden></section>
+  <section class="view" id="v-trace" hidden>
+    <div class="subnav-slot"></div>
+    <div class="scope" id="tr-scope"></div>
+    <div class="trace">
+      <div>
+        <div class="board-wrap">
+          <svg id="board" class="sq" viewBox="0 0 109 109" aria-label="Zone de tracé">
+            <g class="gridlines"></g><g class="ghost"></g><g class="hint"></g><g class="done"></g><circle class="start" r="2.8" cx="-10" cy="-10"/><path class="live" d=""/>
+          </svg>
+        </div>
+        <div class="board-tools">
+          <button class="btn" id="tr-hint"><svg><use href="#i-bulb"/></svg>Indice</button>
+          <button class="btn" id="tr-show"><svg><use href="#i-play"/></svg>Voir l’ordre</button>
+          <button class="btn" id="tr-reset"><svg><use href="#i-replay"/></svg>Recommencer</button>
+        </div>
+      </div>
+      <div class="panel pad">
+        <div class="tr-head">
+          <div class="kj" id="tr-k"></div>
+          <div style="min-width:0">
+            <div class="meaning" id="tr-m" style="padding:0;font-size:21px"></div>
+            <div class="muted" id="tr-r" style="font-weight:700"></div>
+          </div>
+        </div>
+        <div class="row" style="margin-top:16px">
+          <div class="seg" role="group" aria-label="Mode de tracé">
+            <button id="md-guide" aria-pressed="true">Guidé</button>
+            <button id="md-mem" aria-pressed="false">De mémoire</button>
+          </div>
+        </div>
+        <div class="prog-strokes" id="tr-prog"></div>
+        <div class="muted" id="tr-count" style="font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums"></div>
+        <div class="fb" id="tr-fb" aria-live="polite"></div>
+        <div class="row">
+          <label class="sr" for="tr-sel">Choisir un kanji</label>
+          <select id="tr-sel"></select>
+          <button class="btn" id="tr-rand">Au hasard</button>
+          <button class="btn go" id="tr-next">Kanji suivant</button>
+        </div>
+        <div class="tips">
+          <p>Trace chaque trait dans l’ordre, d’un seul geste, en partant du point rouge.</p>
+          <p><b>Guidé</b> montre le kanji en filigrane. <b>De mémoire</b> le cache : seul son sens t’aide. Après deux essais ratés, le trait s’affiche en indice.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="view" id="v-cartes" hidden>
+    <div class="subnav-slot"></div>
+    <div class="scope" id="c-scope"></div>
+    <div class="stage-wrap" id="stage"></div>
+  </section>
+  <section class="view" id="v-quiz" hidden>
+    <div class="subnav-slot"></div>
+    <div class="scope" id="q-scope"></div>
+    <div class="quiz" id="quiz"></div>
+  </section>
+  <section class="view" id="v-profil" hidden></section>
+  <section class="view" id="v-vocab" hidden></section>
+  <section class="view" id="v-grammaire" hidden></section>
+  <section class="view" id="v-gcartes" hidden><div class="subnav-slot"></div><div class="scope" id="gc-scope"></div><div class="stage-wrap" id="gstage"></div></section>
+  <section class="view" id="v-gquiz" hidden><div class="subnav-slot"></div><div class="scope" id="gq-scope"></div><div class="quiz" id="gquizbox"></div></section>
+  <section class="view" id="v-vcartes" hidden><div class="subnav-slot"></div><div class="scope" id="vc-scope"></div><div class="stage-wrap" id="vstage"></div></section>
+  <section class="view" id="v-vquiz" hidden><div class="subnav-slot"></div><div class="scope" id="vq-scope"></div><div class="quiz" id="vquizbox"></div></section>
+</main>
+
+<nav class="bottom" aria-label="Navigation">
+  <a href="#accueil" data-v="accueil"><svg><use href="#i-home"/></svg>Accueil</a>
+  <a href="#kanji" data-v="kanji"><svg><use href="#i-book"/></svg>Kanji</a>
+  <a href="#vocab" data-v="vocab"><svg><use href="#i-words"/></svg>Vocabulaire</a>
+  <a href="#grammaire" data-v="grammaire"><svg><use href="#i-gram"/></svg>Grammaire</a>
+  <a href="#profil" data-v="profil"><svg><use href="#i-user"/></svg>Profil</a>
+</nav>
+
+<div class="ov" id="ov" hidden><div class="dlg" role="dialog" aria-modal="true" aria-labelledby="d-m" id="dlg"></div></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<script>
+const NS = "http://www.w3.org/2000/svg";
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const reduceMotion = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+const DAY = 864e5, INTERVALS = [0, 1, 2, 4, 7, 15, 30];
+const plural = (n, w) => `${n} ${w}${n > 1 ? "s" : ""}`;
+
+/* ---------- regions ---------- */
+const REGIONS = [
+  { id: "n5", lv: "N5", n: 80,   kj: "村", name: "Le village",          desc: "Les tout premiers kanji : nombres, jours, famille.", c: "var(--r5)" },
+  { id: "n4", lv: "N4", n: 166,  kj: "竹", name: "La bambouseraie",     desc: "Le quotidien : couleurs, saisons, verbes courants.", c: "var(--r4)" },
+  { id: "n3", lv: "N3", n: 367,  kj: "川", name: "La rivière",          desc: "Lire des textes simples et la presse facile.", c: "var(--r3)" },
+  { id: "n2", lv: "N2", n: 367,  kj: "山", name: "La montagne",         desc: "Journaux, travail, conversations d’adulte.", c: "var(--r2)" },
+  { id: "n1", lv: "N1", n: 1232, kj: "寺", name: "Le temple du sommet", desc: "Le japonais écrit dans toute sa richesse.", c: "var(--r1)" },
+];
+const RG = Object.fromEntries(REGIONS.map(r => [r.id, r]));
+
+/* ---------- state ---------- */
+const KEY = "jardin-kanji-v1";
+const today = () => { const d = new Date(); return `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`; };
+let S = { p: {}, xp: 0, streak: 0, lastDay: null, best: 0, sel: { lvl: "n5", stage: null }, dir: "k", mode: "guide", trK: null, day: null, started: false };
+try { Object.assign(S, JSON.parse(localStorage.getItem(KEY)) || {}); } catch (e) {}
+try { // reprend la progression de la première version
+  const old = JSON.parse(localStorage.getItem("carnet-kanji-v1"));
+  if (old && old.p && !S.migrated) { for (const k in old.p) if (!S.p[k]) S.p[k] = old.p[k]; S.migrated = true; }
+} catch (e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+const P = (k, l) => { const p = (S.p[k] ||= { box: 0, due: 0, seen: false, trace: 0, ok: 0, ko: 0 }); if (l) p.l = l; else if (!p.l && BYK[k]) p.l = BYK[k].l; return p; };
+const status = k => { const p = S.p[k]; if (!p || !p.seen) return "new"; return p.box >= 3 ? "known" : "learn"; };
+function dayState() {
+  const t = today();
+  if (!S.day || S.day.date !== t) S.day = { date: t, trace: 0, cards: 0, quiz: 0, done: [] };
+  return S.day;
+}
+function touchStreak() {
+  const t = today();
+  if (S.lastDay === t) return;
+  const y = new Date(Date.now() - DAY); const ys = `${y.getFullYear()}-${y.getMonth() + 1}-${y.getDate()}`;
+  S.streak = S.lastDay === ys ? S.streak + 1 : 1; S.best = Math.max(S.best || 0, S.streak); S.lastDay = t;
+}
+const streakNow = () => { const t = today(); const y = new Date(Date.now() - DAY); const ys = `${y.getFullYear()}-${y.getMonth() + 1}-${y.getDate()}`; return (S.lastDay === t || S.lastDay === ys) ? S.streak : 0; };
+
+/* ---------- XP & levels ---------- */
+const lvlFromXp = xp => { let l = 1; while (xp >= 60 * l * (l + 1) / 2 * 1) { l++; } return l; };
+const xpFor = l => 60 * (l - 1) * l / 2;
+const TITLES = [[1, "Graine"], [3, "Pousse"], [5, "Apprenti"], [8, "Calligraphe"], [12, "Lettré"], [17, "Maître du pinceau"], [25, "Sage du sommet"]];
+const titleOf = l => TITLES.filter(t => l >= t[0]).pop()[1];
+const QUESTS = [
+  { id: "trace", t: "Tracer 3 kanji", goal: 3, ic: "i-brush" },
+  { id: "cards", t: "Réviser 15 cartes", goal: 15, ic: "i-cards" },
+  { id: "quiz", t: "Réussir un quiz (7/10 ou plus)", goal: 1, ic: "i-quiz" },
+];
+function gain(xp, why) {
+  touchStreak(); S.started = true;
+  const before = lvlFromXp(S.xp); S.xp += xp;
+  toast(`+${xp} XP${why ? " · " + why : ""}`, "i-leaf");
+  const after = lvlFromXp(S.xp);
+  if (after > before) setTimeout(() => toast(`Niveau ${after} ! Tu deviens « ${titleOf(after)} »`, "i-star"), 500);
+  save(); renderHud();
+}
+function bump(q, n = 1) {
+  const d = dayState(); d[q] += n;
+  const Q = QUESTS.find(x => x.id === q);
+  if (d[q] >= Q.goal && !d.done.includes(q)) { d.done.push(q); setTimeout(() => { toast(`Quête accomplie : ${Q.t}`, "i-check"); gain(30); if (d.done.length === 3) setTimeout(() => toast("Les trois quêtes du jour sont faites. Bravo !", "i-lantern"), 700); }, 600); }
+  save();
+}
+function toast(msg, ic) {
+  const t = document.createElement("div"); t.className = "toast";
+  t.innerHTML = `<svg style="color:var(--amber)"><use href="#${ic || "i-leaf"}"/></svg><span>${esc(msg)}</span>`;
+  $("#toasts").appendChild(t); setTimeout(() => t.remove(), 2600);
+}
+function renderHud() {
+  const l = lvlFromXp(S.xp);
+  $("#hud").innerHTML = `
+    <span class="pill" title="Jours d’affilée"><span class="ic" style="background:var(--amber-soft);color:var(--amber)"><svg><use href="#i-lantern"/></svg></span>${streakNow()} j</span>
+    <a href="#profil" class="pill xp-pill" style="color:inherit;text-decoration:none" title="Ton profil"><span class="ic" style="background:var(--leaf-soft);color:var(--leaf-deep)"><svg><use href="#i-leaf"/></svg></span>Niv. ${l}</a>`;
+}
+
+/* ---------- data loading ---------- */
+const LV = {}; const BYK = {}; const loading = {};
+function ensureLevel(id) {
+  if (LV[id]) return Promise.resolve(LV[id]);
+  return loading[id] ||= fetch(`data/${id}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(arr => {
+    arr.forEach(d => { d.l = id; BYK[d.k] = d; if (S.p[d.k] && !S.p[d.k].l) S.p[d.k].l = id; });
+    LV[id] = arr; return arr;
+  });
+}
+const stagesOf = id => [...new Set(LV[id].map(d => d.g))];
+function pool(sel = S.sel) {
+  const arr = LV[sel.lvl] || [];
+  return !sel.stage || sel.stage === "Tous" ? arr : arr.filter(d => d.g === sel.stage);
+}
+const levelStats = id => {
+  let known = 0, learn = 0;
+  for (const k in S.p) { const p = S.p[k]; if (p.l !== id || !p.seen) continue; p.box >= 3 ? known++ : learn++; }
+  return { known, learn };
+};
+const dueAll = () => { const now = Date.now(); return Object.keys(S.p).filter(k => S.p[k].seen && S.p[k].due <= now); };
+
+/* ---------- svg helpers ---------- */
+const GRID = '<rect class="g-frame" x=".5" y=".5" width="108" height="108"/><line class="g-dash" x1="54.5" y1="0" x2="54.5" y2="109"/><line class="g-dash" x1="0" y1="54.5" x2="109" y2="54.5"/>';
+const meas = document.createElementNS(NS, "svg");
+meas.setAttribute("style", "position:absolute;width:0;height:0;overflow:hidden"); meas.setAttribute("aria-hidden", "true");
+const measPath = document.createElementNS(NS, "path"); meas.appendChild(measPath); document.body.appendChild(meas);
+const refCache = {};
+function refStroke(k, i) {
+  const key = k + i; if (refCache[key]) return refCache[key];
+  measPath.setAttribute("d", BYK[k].s[i]);
+  const L = measPath.getTotalLength(), pts = [];
+  for (let j = 0; j < 24; j++) { const p = measPath.getPointAtLength(L * j / 23); pts.push([p.x, p.y]); }
+  return (refCache[key] = { pts, L });
+}
+function kanjiSVG(d, nums) {
+  return `<svg class="sq" viewBox="0 0 109 109" aria-label="${esc(d.k)}, ordre des traits">${GRID}<g>${d.s.map(s => `<path class="stk" d="${s}"/>`).join("")}</g>${nums ? `<g>${d.n.map((p, i) => `<text class="num" x="${p[0]}" y="${p[1]}">${i + 1}</text>`).join("")}</g>` : ""}</svg>`;
+}
+function animateStrokes(svg, speed = 1) {
+  (svg._anims || []).forEach(a => a.cancel()); svg._anims = [];
+  const paths = [...svg.querySelectorAll("path.stk")], nums = [...svg.querySelectorAll(".num")];
+  let t = 250;
+  paths.forEach((p, i) => {
+    const L = p.getTotalLength() + 1; p.style.strokeDasharray = `${L} ${L}`;
+    if (reduceMotion()) { p.style.strokeDashoffset = 0; return; }
+    const dur = Math.max(280, L * 13) / speed;
+    svg._anims.push(p.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: dur, delay: t, fill: "both", easing: "cubic-bezier(.45,0,.3,1)" }));
+    if (nums[i]) svg._anims.push(nums[i].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 150, delay: t, fill: "both" }));
+    t += dur + 140 / speed;
+  });
+}
+const seqHTML = d => d.s.map((_, i) => `<svg class="sq" viewBox="0 0 109 109" aria-hidden="true">${GRID}${d.s.slice(0, i).map(s => `<path class="p" d="${s}"/>`).join("")}<path class="c" d="${d.s[i]}"/><text class="n" x="5" y="15">${i + 1}</text></svg>`).join("");
+const starsHTML = n => `<span class="stars" aria-label="${n} étoile${n > 1 ? "s" : ""} sur 3">${[0, 1, 2].map(i => `<svg viewBox="0 0 24 24" class="${i < n ? "on" : "off"}"><use href="#i-star"/></svg>`).join("")}</span>`;
+function stageStars(items) {
+  const n = items.length; let seen = 0, known = 0;
+  items.forEach(d => { const s = status(d.k); if (s !== "new") seen++; if (s === "known") known++; });
+  return known === n ? 3 : known >= n / 2 ? 2 : seen === n ? 1 : 0;
+}
+
+/* ---------- speech ---------- */
+const canSpeak = "speechSynthesis" in window;
+function speak(t) { try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(t); u.lang = "ja-JP"; u.rate = .9; speechSynthesis.speak(u); } catch (e) {} }
+
+/* ---------- HOME ---------- */
+function rng(seed) { return () => { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+function sceneSVG(known, learn) {
+  const r = rng(7); let flowers = "", sprouts = "";
+  const hillY = x => 205 - 40 * Math.sin((x / 900) * Math.PI) - 6 * Math.sin(x / 70);
+  for (let i = 0; i < Math.min(known, 70); i++) {
+    const x = 30 + r() * 840, y = hillY(x) + 8 + r() * 36, s = .7 + r() * .5;
+    flowers += `<g transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${s.toFixed(2)})"><circle class="bloom" cx="0" cy="-4" r="3.4"/><circle class="bloom" cx="3.8" cy="-1.2" r="3.4"/><circle class="bloom" cx="2.4" cy="3.2" r="3.4"/><circle class="bloom" cx="-2.4" cy="3.2" r="3.4"/><circle class="bloom" cx="-3.8" cy="-1.2" r="3.4"/><circle class="core" r="2.2"/></g>`;
+  }
+  for (let i = 0; i < Math.min(learn, 50); i++) {
+    const x = 30 + r() * 840, y = hillY(x) + 12 + r() * 34;
+    sprouts += `<path class="sprout" d="M${x.toFixed(1)} ${y.toFixed(1)}v-7m0 3q-4-1-5-5m5 3q4-1 5-5"/>`;
+  }
+  let stars = ""; const r2 = rng(3);
+  for (let i = 0; i < 40; i++) stars += `<circle class="star" cx="${(r2() * 900).toFixed(0)}" cy="${(r2() * 110).toFixed(0)}" r="${(r2() * 1.3 + .4).toFixed(1)}"/>`;
+  let flies = ""; for (let i = 0; i < 12; i++) flies += `<circle class="fly" cx="${(r2() * 900).toFixed(0)}" cy="${(150 + r2() * 90).toFixed(0)}" r="2" style="animation-delay:${(r2() * 2.6).toFixed(2)}s"/>`;
+  return `<svg class="land" viewBox="0 0 900 260" preserveAspectRatio="xMaxYMax slice" aria-hidden="true">
+    <defs><linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="sky-a"/><stop offset="1" class="sky-b"/></linearGradient></defs>
+    <rect width="900" height="260" fill="url(#skyg)"/>
+    <g class="night">${stars}<circle class="moon" cx="760" cy="52" r="22"/><circle cx="770" cy="46" r="20" fill="url(#skyg)"/></g>
+    <g class="day"><circle class="sun" cx="760" cy="56" r="26"/></g>
+    <g class="cloud"><ellipse cx="560" cy="60" rx="38" ry="13"/><ellipse cx="585" cy="52" rx="24" ry="13"/><ellipse cx="230" cy="40" rx="30" ry="10"/></g>
+    <path class="mount" d="M0 170 L120 95 L210 150 L330 70 L470 160 L600 110 L720 165 L840 105 L900 140 V260 H0Z"/>
+    <path class="h3" d="M0 190 Q200 140 420 175 T900 165 V260 H0Z"/>
+    <path class="h1" d="M0 ${hillY(0)} ${Array.from({ length: 31 }, (_, i) => `L${i * 30} ${hillY(i * 30).toFixed(1)}`).join(" ")} V260 H0Z"/>
+    <g transform="translate(640 132)">
+      <rect class="wood" x="6" y="22" width="56" height="34" rx="3"/><rect class="wall" x="10" y="26" width="48" height="30" rx="2"/>
+      <rect class="win" x="16" y="32" width="12" height="10" rx="2"/><rect class="wood" x="36" y="34" width="14" height="22" rx="2"/>
+      <path class="roof" d="M-4 26 L34 0 L72 26 Z"/>
+    </g>
+    <g transform="translate(110 118)"><rect class="wood" x="18" y="34" width="8" height="40" rx="3"/>
+      <circle class="bloom" cx="22" cy="28" r="22"/><circle class="bloom" cx="4" cy="38" r="15"/><circle class="bloom" cx="40" cy="38" r="15"/><circle class="bloom" cx="22" cy="10" r="13" opacity=".9"/></g>
+    <path class="h2" d="M0 245 Q250 215 520 238 T900 230 V260 H0Z"/>
+    ${sprouts}${flowers}
+    <g class="night">${flies}</g>
+    <svg x="760" y="150" width="100" height="92" viewBox="0 0 120 110"><use href="#mochi"/></svg>
+  </svg>`;
+}
+function mochiSays() {
+  const h = new Date().getHours(), hi = h < 5 ? "Bonne nuit" : h < 18 ? "Bonjour" : "Bonsoir";
+  const due = dueAll().length, d = dayState();
+  if (!S.started) return [`${hi}${S.name ? ", " + S.name : ""} !`, "Commence par le village N5 : trace tes premiers kanji, puis révise-les en cartes."];
+  if (d.done.length === 3) return [`Bravo pour aujourd’hui !`, "Les trois quêtes sont faites. Reviens demain pour garder ta série."];
+  if (due) return [`${hi}${S.name ? ", " + S.name : ""} !`, `${plural(due, "carte")} t’attend${due > 1 ? "ent" : ""} pour une révision. On s’y met ?`];
+  return [`${hi}${S.name ? ", " + S.name : ""} !`, "Aucune révision en attente. C’est le moment parfait pour découvrir une nouvelle étape."];
+}
+function nextStage() {
+  const id = S.sel.lvl; if (!LV[id]) return null;
+  const st = stagesOf(id);
+  if (S.sel.stage && S.sel.stage !== "Tous") { const it = pool(); if (stageStars(it) < 3) return S.sel.stage; }
+  return st.find(g => stageStars(LV[id].filter(d => d.g === g)) < 2) || st[0];
+}
+function renderHome() {
+  const v = $("#v-accueil");
+  let known = 0, learn = 0; for (const k in S.p) { const s = status(k); if (s === "known") known++; else if (s === "learn") learn++; }
+  const l = lvlFromXp(S.xp), cur = S.xp - xpFor(l), need = xpFor(l + 1) - xpFor(l);
+  const [t1, t2] = mochiSays(), d = dayState(), due = dueAll().length;
+  const ns = nextStage(), items = ns ? LV[S.sel.lvl].filter(x => x.g === ns) : [];
+  v.innerHTML = `
+    <div><h1 style="font-size:26px">${esc(t1)}</h1><p class="muted" style="margin:2px 0 0;font-weight:700">${esc(t2)}</p></div>
+    <div class="home-row">
+      <div class="panel pad">
+        <div class="row" style="justify-content:space-between;margin-bottom:12px"><h3>Quêtes du jour</h3><span class="muted" style="font-weight:800;font-size:13px">${d.done.length} / 3</span></div>
+        <div class="quests">${QUESTS.map(q => { const n = Math.min(d[q.id], q.goal), done = d.done.includes(q.id); return `
+          <div class="quest ${done ? "done" : ""}"><span class="qi"><svg><use href="#${done ? "i-check" : q.ic}"/></svg></span>
+          <div><div class="qt">${q.t}</div><div class="bar"><i style="width:${n / q.goal * 100}%;background:var(--leaf)"></i></div></div>
+          <span class="qn">${done ? "+30 XP" : `${n}/${q.goal}`}</span></div>`; }).join("")}</div>
+      </div>
+      <div class="panel pad cont">
+        <span class="eyebrow">Continuer le voyage</span>
+        ${ns ? `<div class="stage-big"><span class="kj" style="border-color:${RG[S.sel.lvl].c}">${items[0].k}</span><div><b class="disp" style="font-size:17px">${RG[S.sel.lvl].lv} · ${esc(ns)}</b><div class="muted" style="font-size:13px">${items.map(x => x.k).join(" ")}</div></div></div>` : `<div class="loading" style="padding:10px">Chargement…</div>`}
+        <div class="row">
+          <button class="btn go big" id="h-go"><svg><use href="#i-play"/></svg>Jouer l’étape</button>
+          <button class="btn" id="h-rev" ${due ? "" : "disabled"}><svg><use href="#i-cards"/></svg>Réviser (${due})</button>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="justify-content:space-between;margin-top:6px"><h2>Kanji</h2><span class="muted" style="font-weight:700;font-size:13.5px">Du village jusqu’au temple : 2 212 kanji</span></div>
+    <div class="map">${REGIONS.map(r => { const s = levelStats(r.id); return `
+      <button class="region" data-r="${r.id}" style="--rc:${r.c}" aria-current="${S.sel.lvl === r.id}">
+        <span class="medal">${r.kj}</span><span class="lv">${r.lv}</span><b>${r.name}</b><span class="desc">${r.desc}</span>
+        <span class="bar"><i style="width:${(s.known / r.n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(s.learn / r.n * 100).toFixed(1)}%;background:var(--amber)"></i></span>
+        <span class="nums"><span>${s.known} acquis</span><span>${r.n} kanji</span></span>
+      </button>`; }).join("")}</div>`;
+  v.insertAdjacentHTML("beforeend", vocabHomeHTML()); bindVocabHome(v);
+  v.insertAdjacentHTML("beforeend", gramHomeHTML()); bindGramHome(v);
+  v.querySelectorAll(".region[data-r]").forEach(b => b.onclick = () => { setLevel(b.dataset.r); location.hash = "kanji"; });
+  $("#h-go").onclick = () => { if (!ns) return; S.sel.stage = ns; save(); location.hash = "kanji"; };
+  $("#h-rev").onclick = () => { C = null; S.cScope = "due"; save(); location.hash = "cartes"; };
+}
+function setLevel(id) { if (S.sel.lvl !== id) { S.sel = { lvl: id, stage: null }; save(); } }
+
+/* ---------- KANJI (level) view ---------- */
+async function renderKanji() {
+  const v = $("#v-kanji"), id = S.sel.lvl, r = RG[id];
+  if (!LV[id]) { v.innerHTML = subnav(KSUB, "kanji") + `<div class="loading">Chargement des kanji ${r.lv}…</div>`; await ensureLevel(id); if (current !== "kanji") return; }
+  const st = stagesOf(id);
+  if (!S.sel.stage) { S.sel.stage = id === "n5" ? "Tous" : st[0]; save(); }
+  const s = levelStats(id), items = pool();
+  v.innerHTML = `${subnav(KSUB, "kanji")}
+    <div class="reg-tabs" role="group" aria-label="Niveau JLPT">${REGIONS.map(x => `<button class="reg-tab" data-r="${x.id}" style="--rc:${x.c}" aria-pressed="${x.id === id}"><span class="kj">${x.kj}</span>${x.lv}</button>`).join("")}</div>
+    <div class="panel pad banner" style="--rc:${r.c}">
+      <span class="medal">${r.kj}</span>
+      <div style="min-width:0"><span class="eyebrow">${r.lv} · ${r.n} kanji</span><h2>${r.name}</h2><p class="muted" style="margin:2px 0 8px">${r.desc}</p>
+        <div class="bar"><i style="width:${(s.known / r.n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(s.learn / r.n * 100).toFixed(1)}%;background:var(--amber)"></i></div>
+        <div class="muted" style="font-size:12.5px;font-weight:700;margin-top:4px">${s.known} acquis · ${s.learn} en cours · ${r.n - s.known - s.learn} à découvrir</div></div>
+      <div class="acts"></div>
+    </div>
+    <div>
+      <div class="row" style="justify-content:space-between;margin-bottom:6px"><h3>Étapes</h3></div>
+      <div class="stages" role="group" aria-label="Étapes">
+        <button class="stage" data-s="Tous" aria-pressed="${S.sel.stage === "Tous"}"><b>Tout le niveau</b><span class="ks">${r.n} kanji</span></button>
+        ${st.map(g => { const it = LV[id].filter(d => d.g === g); return `<button class="stage" data-s="${esc(g)}" aria-pressed="${S.sel.stage === g}"><b>${esc(g)}</b><span class="ks">${it.slice(0, 6).map(d => d.k).join("")}</span>${starsHTML(stageStars(it))}</button>`; }).join("")}
+      </div>
+    </div>
+    <div class="tools">
+      <input class="search" id="q" type="search" placeholder="Chercher dans le ${r.lv} : sens ou lecture (ex. eau, みず, スイ)" aria-label="Chercher">
+      <div class="legend"><span><i class="dot new"></i>À découvrir</span><span><i class="dot learn"></i>En cours</span><span><i class="dot known"></i>Acquis</span></div>
+    </div>
+    <div class="grid" id="grid"></div>`;
+  v.querySelectorAll(".reg-tab").forEach(b => b.onclick = () => { setLevel(b.dataset.r); renderKanji(); });
+  v.querySelectorAll(".stage").forEach(b => b.onclick = () => { S.sel.stage = b.dataset.s; save(); T = null; C = null; Q = null; renderKanji(); });
+  const cur = v.querySelector('.stage[aria-pressed="true"]'); if (cur) cur.scrollIntoView({ block: "nearest", inline: "center" });
+  v.querySelectorAll(".play button").forEach(b => b.onclick = () => { T = null; C = null; Q = null; S.cScope = "sel"; save(); location.hash = b.dataset.go; });
+  $("#q").oninput = renderGrid; renderGrid();
+}
+function renderGrid() {
+  const q = ($("#q").value || "").trim().toLowerCase();
+  const list = (q ? LV[S.sel.lvl] : pool()).filter(d => !q || d.k === q || d.m.toLowerCase().includes(q) || d.on.includes(q) || d.kun.includes(q) || d.ex.some(e => e[0].includes(q) || e[1].includes(q)));
+  const lbl = { new: "à découvrir", learn: "en cours", known: "acquis" };
+  $("#grid").innerHTML = list.length ? list.map(d => { const st = status(d.k); return `<button class="tile ${st}" data-k="${d.k}" aria-label="${d.k} : ${esc(d.m)}, ${lbl[st]}"><i class="dot ${st}"></i><span class="kj">${d.k}</span><span class="m">${esc(d.m)}</span></button>`; }).join("")
+    : `<div class="empty" style="grid-column:1/-1">Aucun kanji du ${RG[S.sel.lvl].lv} ne correspond à « ${esc(q)} ».</div>`;
+}
+$("#v-kanji").addEventListener("click", e => { const t = e.target.closest(".tile"); if (t) openDetail(t.dataset.k); });
+
+/* ---------- scope bar (activities) ---------- */
+function scopeHTML(extra = "") {
+  const id = S.sel.lvl, st = LV[id] ? stagesOf(id) : [];
+  return `<span class="lbl">Je joue avec</span>
+    <label class="sr" for="${extra}-lv">Niveau</label><select id="${extra}-lv">${REGIONS.map(r => `<option value="${r.id}" ${r.id === id ? "selected" : ""}>${r.lv} · ${r.name}</option>`).join("")}</select>
+    <label class="sr" for="${extra}-st">Étape</label><select id="${extra}-st"><option value="Tous">Tout le niveau</option>${st.map(g => `<option ${g === S.sel.stage ? "selected" : ""}>${esc(g)}</option>`).join("")}</select>`;
+}
+function bindScope(prefix, onChange) {
+  $(`#${prefix}-lv`).onchange = async e => { setLevel(e.target.value); await ensureLevel(S.sel.lvl); S.sel.stage = stagesOf(S.sel.lvl)[0]; save(); onChange(); };
+  $(`#${prefix}-st`).onchange = e => { S.sel.stage = e.target.value; save(); onChange(); };
+}
+
+/* ---------- detail dialog ---------- */
+let lastFocus = null, showNums = true;
+function openDetail(k) {
+  const d = BYK[k], p = S.p[k], st = status(k), r = RG[d.l];
+  const stLbl = { new: "À découvrir", learn: "En cours", known: "Acquis" }[st];
+  lastFocus = document.activeElement;
+  $("#dlg").innerHTML = `
+    <button class="x" id="d-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="dlg-in">
+      <div class="dlg-left">
+        <div id="d-anim">${kanjiSVG(d, showNums)}</div>
+        <div class="row"><button class="btn" id="d-replay"><svg><use href="#i-replay"/></svg>Rejouer</button><button class="btn" id="d-nums" aria-pressed="${showNums}">${showNums ? "Masquer" : "Afficher"} les numéros</button></div>
+      </div>
+      <div style="min-width:0">
+        <div class="meaning" id="d-m">${esc(d.m)}</div>
+        <div class="row" style="margin-top:8px;gap:6px"><span class="tag" style="border-color:${r.c}">${r.lv}</span><span class="tag"><i class="dot ${st}"></i>${stLbl}</span><span class="tag">${plural(d.s.length, "trait")}</span><span class="tag">${esc(d.g)}</span>${p && p.trace ? `<span class="tag">Tracé parfait ×${p.trace}</span>` : ""}</div>
+        ${d.me ? `<p class="muted" style="font-size:12.5px;margin:6px 0 0">Sens donné en anglais (pas de traduction française dans le dictionnaire).</p>` : ""}
+        <dl class="readings"><dt>On’yomi</dt><dd>${esc(d.on)}</dd><dt>Kun’yomi</dt><dd>${esc(d.kun)}</dd></dl>
+        ${d.ex.length ? `<ul class="ex">${d.ex.map(e => `<li><span class="w">${esc(e[0])}</span><span class="r">${esc(e[1])}</span>${canSpeak ? `<button class="speak" data-say="${esc(e[1])}" aria-label="Écouter ${esc(e[1])}"><svg><use href="#i-speak"/></svg></button>` : "<span></span>"}<span class="s">${esc(e[2])}${d.en ? '<span class="en" title="Traduction en anglais">EN</span>' : ""}</span></li>`).join("")}</ul>` : `<p class="muted">Pas de mot courant listé pour ce kanji.</p>`}
+        <div class="row" style="margin-top:16px"><button class="btn go" id="d-trace"><svg><use href="#i-brush"/></svg>S’entraîner au tracé</button></div>
+        <div class="h3">Ordre des traits</div>
+        <div class="seq">${seqHTML(d)}</div>
+      </div>
+    </div>`;
+  $("#ov").hidden = false; document.body.style.overflow = "hidden";
+  animateStrokes($("#d-anim svg")); $("#d-x").focus();
+  $("#d-x").onclick = closeDetail;
+  $("#d-replay").onclick = () => animateStrokes($("#d-anim svg"));
+  $("#d-nums").onclick = () => { showNums = !showNums; $("#d-anim").innerHTML = kanjiSVG(d, showNums); const b = $("#d-nums"); b.textContent = (showNums ? "Masquer" : "Afficher") + " les numéros"; b.setAttribute("aria-pressed", showNums); animateStrokes($("#d-anim svg"), 2.5); };
+  $("#d-trace").onclick = () => { closeDetail(); if (S.sel.lvl !== d.l) S.sel = { lvl: d.l, stage: d.g }; else if (S.sel.stage !== "Tous" && S.sel.stage !== d.g) S.sel.stage = d.g; S.trK = k; T = null; save(); if (current === "trace") renderTrace(); else location.hash = "trace"; };
+  $("#dlg").querySelectorAll(".speak").forEach(b => b.onclick = () => speak(b.dataset.say));
+}
+function closeDetail() { $("#ov").hidden = true; document.body.style.overflow = ""; if (lastFocus && document.contains(lastFocus)) lastFocus.focus(); }
+$("#ov").addEventListener("click", e => { if (e.target.id === "ov") closeDetail(); });
+document.addEventListener("keydown", e => { if (e.key === "Escape" && !$("#ov").hidden) closeDetail(); });
+
+/* ---------- TRACE ---------- */
+const board = $("#board");
+board.querySelector(".gridlines").innerHTML = GRID;
+const gGhost = board.querySelector(".ghost"), gHint = board.querySelector(".hint"), gDone = board.querySelector(".done"), live = board.querySelector(".live"), startDot = board.querySelector(".start");
+let T = null;
+async function renderTrace() {
+  await ensureLevel(S.sel.lvl); if (!S.sel.stage) S.sel.stage = stagesOf(S.sel.lvl)[0];
+  $("#tr-scope").innerHTML = scopeHTML("tr"); bindScope("tr", () => { T = null; renderTrace(); });
+  $("#tr-sel").innerHTML = pool().map(d => `<option value="${d.k}">${d.k} · ${esc(d.m)}</option>`).join("");
+  if (!T || T.k !== S.trK || !pool().some(d => d.k === T.k)) startTrace(S.trK);
+}
+function startTrace(k) {
+  const pl = pool();
+  if (!k || !pl.some(d => d.k === k)) k = (pl.find(d => status(d.k) !== "known") || pl[0]).k;
+  S.trK = k; save();
+  const d = BYK[k];
+  T = { k, i: 0, errors: 0, strokeErr: 0, marks: [], done: false };
+  $("#tr-sel").value = k;
+  gGhost.innerHTML = d.s.map(s => `<path d="${s}"/>`).join("");
+  gHint.innerHTML = ""; gDone.innerHTML = ""; live.setAttribute("d", "");
+  $("#tr-m").textContent = d.m; $("#tr-r").textContent = `${d.on} · ${d.kun}`;
+  setMode(S.mode);
+  setFb("", "Commence par le trait 1, au point rouge.");
+  updTraceProg();
+}
+function setMode(m) {
+  S.mode = m; save();
+  $("#md-guide").setAttribute("aria-pressed", m === "guide"); $("#md-mem").setAttribute("aria-pressed", m === "mem");
+  gGhost.style.display = m === "guide" ? "" : "none";
+  const kEl = $("#tr-k"), hide = m === "mem" && T && !T.done;
+  kEl.textContent = T ? T.k : ""; kEl.classList.toggle("hidden-k", !!hide);
+  kEl.setAttribute("aria-label", hide ? "Kanji caché" : (T ? T.k : ""));
+  placeStart();
+}
+function placeStart() {
+  if (!T || T.done || S.mode !== "guide") { startDot.setAttribute("cx", -10); return; }
+  const r = refStroke(T.k, T.i).pts[0]; startDot.setAttribute("cx", r[0]); startDot.setAttribute("cy", r[1]);
+}
+function updTraceProg() {
+  const n = BYK[T.k].s.length;
+  $("#tr-prog").innerHTML = Array.from({ length: n }, (_, j) => `<i class="${j < T.i ? (T.marks[j] ? "e" : "d") : j === T.i && !T.done ? "c" : ""}"></i>`).join("");
+  $("#tr-count").textContent = T.done ? `${n} / ${n} traits · ${plural(T.errors, "erreur")}` : `Trait ${T.i + 1} sur ${n} · ${plural(T.errors, "erreur")}`;
+}
+const MOCHI_MINI = '<svg viewBox="0 0 120 110" aria-hidden="true"><use href="#mochi"/></svg>';
+function setFb(cls, msg) { const f = $("#tr-fb"); f.className = "fb " + cls; f.innerHTML = MOCHI_MINI + `<span>${esc(msg)}</span>`; }
+function toSvg(e) { const r = board.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * 109, (e.clientY - r.top) / r.height * 109]; }
+let drawing = null;
+board.addEventListener("pointerdown", e => {
+  if (!T || T.done) return;
+  e.preventDefault(); board.setPointerCapture(e.pointerId);
+  drawing = [toSvg(e)]; live.classList.remove("bad"); live.setAttribute("d", "");
+});
+board.addEventListener("pointermove", e => {
+  if (!drawing) return;
+  const evs = e.getCoalescedEvents ? e.getCoalescedEvents() : [e];
+  (evs.length ? evs : [e]).forEach(ev => drawing.push(toSvg(ev)));
+  live.setAttribute("d", "M" + drawing.map(p => p[0].toFixed(1) + " " + p[1].toFixed(1)).join("L"));
+});
+board.addEventListener("pointerup", () => { if (!drawing) return; const pts = drawing; drawing = null; judge(pts); });
+board.addEventListener("pointercancel", () => { drawing = null; live.setAttribute("d", ""); });
+function pathLen(p) { let L = 0; for (let i = 1; i < p.length; i++) L += Math.hypot(p[i][0] - p[i - 1][0], p[i][1] - p[i - 1][1]); return L; }
+function resample(p, n) {
+  const L = pathLen(p); if (L === 0) return Array(n).fill(p[0]);
+  const step = L / (n - 1), out = [p[0]]; let acc = 0, prev = p[0];
+  for (let i = 1; i < p.length && out.length < n; i++) {
+    let cur = p[i], d = Math.hypot(cur[0] - prev[0], cur[1] - prev[1]);
+    while (acc + d >= step && out.length < n) { const t = (step - acc) / d, q = [prev[0] + t * (cur[0] - prev[0]), prev[1] + t * (cur[1] - prev[1])]; out.push(q); d -= (step - acc); prev = q; acc = 0; }
+    acc += d; prev = cur;
+  }
+  while (out.length < n) out.push(p[p.length - 1]);
+  return out;
+}
+const meanDist = (a, b) => a.reduce((s, p, i) => s + Math.hypot(p[0] - b[i][0], p[1] - b[i][1]), 0) / a.length;
+function judge(raw) {
+  const d = BYK[T.k];
+  if (pathLen(raw) < 2.5) { live.setAttribute("d", ""); return; }
+  const u = resample(raw, 24), ref = refStroke(T.k, T.i), thr = 12 + Math.min(4, ref.L / 25);
+  const fwd = meanDist(u, ref.pts), rev = meanDist(u, ref.pts.slice().reverse()), lenOk = pathLen(raw) > ref.L * .35;
+  if (fwd < thr && lenOk) return accept();
+  let why;
+  if (rev < thr && lenOk) why = "Bonne forme, mais dans le mauvais sens. Pars du point de départ.";
+  else {
+    let other = -1;
+    for (let j = T.i + 1; j < d.s.length; j++) { const r = refStroke(T.k, j); if (meanDist(u, r.pts) < 12 + Math.min(4, r.L / 25)) { other = j; break; } }
+    why = other >= 0 ? `Ça, c’est le trait ${other + 1}. Il faut d’abord le trait ${T.i + 1}.` : `Pas tout à fait. Réessaie le trait ${T.i + 1}.`;
+  }
+  T.errors++; T.strokeErr++; T.marks[T.i] = true;
+  live.classList.add("bad");
+  setTimeout(() => { if (!drawing) { live.setAttribute("d", ""); live.classList.remove("bad"); } }, reduceMotion() ? 250 : 480);
+  if (T.strokeErr >= 2) { showHint(); why += " Je te montre."; }
+  setFb("ko", why); updTraceProg();
+}
+function accept() {
+  const d = BYK[T.k];
+  live.setAttribute("d", ""); gHint.innerHTML = "";
+  const p = document.createElementNS(NS, "path"); p.setAttribute("d", d.s[T.i]); gDone.appendChild(p);
+  if (!reduceMotion()) { const L = p.getTotalLength() + 1; p.style.strokeDasharray = `${L} ${L}`; p.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: 180, fill: "both", easing: "ease-out" }); }
+  T.i++; T.strokeErr = 0;
+  if (T.i >= d.s.length) return finishTrace();
+  setFb("ok", `Joli ! Trait ${T.i + 1} maintenant.`); updTraceProg(); placeStart();
+}
+function finishTrace() {
+  T.done = true; startDot.setAttribute("cx", -10);
+  const p = P(T.k); p.seen = true;
+  const n = BYK[T.k].s.length;
+  if (T.errors === 0) { p.trace++; setFb("ok", `Parfait ! ${T.k} tracé sans aucune erreur.`); gain(S.mode === "mem" ? 20 : 15, "tracé parfait"); }
+  else if (T.errors <= 2) { setFb("mid", `Terminé avec ${plural(T.errors, "erreur")}. Recommence pour le réussir sans faute.`); gain(6); }
+  else { setFb("ko", `Terminé, mais ${T.errors} erreurs sur ${n} traits. Regarde l’ordre et réessaie.`); gain(3); }
+  bump("trace"); save(); setMode(S.mode); updTraceProg();
+}
+function showHint() {
+  if (!T || T.done) return;
+  gHint.innerHTML = `<path d="${BYK[T.k].s[T.i]}"/>`;
+  const p = gHint.firstChild, r = refStroke(T.k, T.i).pts[0];
+  startDot.setAttribute("cx", r[0]); startDot.setAttribute("cy", r[1]);
+  if (!reduceMotion()) { const L = p.getTotalLength() + 1; p.style.strokeDasharray = `${L} ${L}`; p.animate([{ strokeDashoffset: L }, { strokeDashoffset: 0 }], { duration: Math.max(350, L * 14), fill: "both", easing: "ease-in-out" }); }
+}
+$("#tr-hint").onclick = () => { if (T && !T.done) { T.marks[T.i] = true; showHint(); setFb("mid", `Voici le trait ${T.i + 1}. À toi de le tracer !`); updTraceProg(); } };
+$("#tr-reset").onclick = () => startTrace(T.k);
+$("#tr-show").onclick = () => openDetail(T.k);
+$("#md-guide").onclick = () => setMode("guide");
+$("#md-mem").onclick = () => setMode("mem");
+$("#tr-sel").onchange = e => startTrace(e.target.value);
+$("#tr-rand").onclick = () => { const pl = pool().filter(d => d.k !== T.k); if (pl.length) startTrace(pl[Math.random() * pl.length | 0].k); };
+$("#tr-next").onclick = () => { const pl = pool(); const i = pl.findIndex(d => d.k === T.k); startTrace(pl[(i + 1) % pl.length].k); };
+
+/* ---------- CARDS ---------- */
+let C = null;
+async function renderCards() {
+  await ensureLevel(S.sel.lvl); if (!S.sel.stage) S.sel.stage = stagesOf(S.sel.lvl)[0];
+  const due = dueAll();
+  await Promise.all([...new Set(due.map(k => S.p[k].l).filter(Boolean))].map(ensureLevel));
+  const scope = S.cScope || "sel";
+  $("#c-scope").innerHTML = `<div class="seg" role="group" aria-label="Paquet"><button id="cs-sel" aria-pressed="${scope === "sel"}">Mon étape</button><button id="cs-due" aria-pressed="${scope === "due"}">Toutes mes révisions (${due.filter(k => BYK[k]).length})</button></div>
+    ${scope === "sel" ? scopeHTML("c") : ""}
+    <div class="seg" role="group" aria-label="Sens des cartes" style="margin-left:auto"><button id="dir-k" aria-pressed="${S.dir === "k"}">Kanji → sens</button><button id="dir-m" aria-pressed="${S.dir === "m"}">Sens → kanji</button></div>`;
+  $("#cs-sel").onclick = () => { S.cScope = "sel"; C = null; save(); renderCards(); };
+  $("#cs-due").onclick = () => { S.cScope = "due"; C = null; save(); renderCards(); };
+  if (scope === "sel") bindScope("c", () => { C = null; renderCards(); });
+  $("#dir-k").onclick = () => { S.dir = "k"; save(); renderCards(); };
+  $("#dir-m").onclick = () => { S.dir = "m"; save(); renderCards(); };
+  if (!C) buildDeck(false);
+  renderCard();
+}
+function buildDeck(all) {
+  const now = Date.now();
+  const src = S.cScope === "due" ? dueAll().filter(k => BYK[k]).map(k => BYK[k]) : pool();
+  const due = shuffle(src.filter(d => S.p[d.k] && S.p[d.k].seen && S.p[d.k].due <= now));
+  const fresh = S.cScope === "due" ? [] : src.filter(d => !S.p[d.k] || !S.p[d.k].seen).slice(0, 8);
+  const q = all ? shuffle(src) : [...due, ...fresh];
+  C = { q: q.map(d => d.k), flipped: false, reviewed: 0, total: q.length };
+}
+function renderCard() {
+  const st = $("#stage");
+  if (!C.q.length) {
+    const now = Date.now();
+    const next = Object.values(S.p).filter(p => p.seen && p.due > now).sort((a, b) => a.due - b.due)[0];
+    const whenTxt = next ? (() => { const h = Math.round((next.due - now) / 36e5); return h < 24 ? `dans ${Math.max(1, h)} h` : `dans ${plural(Math.round(h / 24), "jour")}`; })() : null;
+    st.innerHTML = `<div class="panel done-box"><svg class="mascot" viewBox="0 0 120 110" aria-hidden="true"><use href="#mochi"/></svg>
+      <h2>${C.reviewed ? `Session terminée : ${plural(C.reviewed, "carte")} revue${C.reviewed > 1 ? "s" : ""}` : "Rien à réviser ici pour l’instant"}</h2>
+      <p class="muted">${whenTxt ? `Prochaine révision ${whenTxt}.` : ""} Tu peux découvrir de nouvelles cartes ou revoir toute l’étape librement.</p>
+      <div class="row" style="justify-content:center"><button class="btn go" id="c-more">Nouvelle session</button><button class="btn" id="c-free">Révision libre</button></div></div>`;
+    $("#c-more").onclick = () => { if (S.cScope === "due") S.cScope = "sel"; buildDeck(false); if (!C.q.length) buildDeck(true); renderCards(); };
+    $("#c-free").onclick = () => { if (S.cScope === "due") S.cScope = "sel"; buildDeck(true); renderCards(); };
+    return;
+  }
+  const d = BYK[C.q[0]], p = S.p[d.k], isNew = !p || !p.seen;
+  const front = S.dir === "k" ? `<div class="big">${d.k}</div>` : `<div class="q">${esc(d.m)}</div><div class="muted" style="margin-top:8px;font-weight:700">Quel kanji ? Imagine-le, ou trace-le du doigt.</div>`;
+  const nb = Math.min(6, ((p && p.box) || 0) + 1), ni = INTERVALS[nb];
+  st.innerHTML = `
+    <div class="row" style="justify-content:space-between;margin-bottom:12px"><span class="tag">${RG[d.l].lv} · ${esc(d.g)}</span><span class="muted" style="font-weight:800;font-size:13px;font-variant-numeric:tabular-nums">${C.q.length} dans la pile · ${C.reviewed} revues</span></div>
+    <div class="card" id="card" tabindex="0" role="button" aria-label="Retourner la carte">
+      <div class="card-in">
+        <div class="face front"><span class="tag ftag" style="${isNew ? "background:var(--sakura-soft)" : ""}">${isNew ? "Nouvelle carte" : "Révision"}</span>${front}<span class="tap">Touche la carte ou <span class="kbd">Espace</span></span></div>
+        <div class="face back">
+          <div class="back-top"><span class="kj">${d.k}</span><div><div class="meaning">${esc(d.m)}</div><div class="rd"><span>ON</span>${esc(d.on)}</div><div class="rd"><span>KUN</span>${esc(d.kun)}</div></div></div>
+          <div class="exs">${d.ex.map(e => `<div><b>${esc(e[0])}</b>${esc(e[1])} · ${esc(e[2])}</div>`).join("")}</div>
+        </div>
+      </div>
+    </div>
+    <div class="grades" id="grades" hidden>
+      <button class="btn g-again" data-g="0">À revoir<small>tout à l’heure · 1</small></button>
+      <button class="btn g-hard" data-g="1">Difficile<small>demain · 2</small></button>
+      <button class="btn g-good" data-g="2">Je sais<small>${ni === 1 ? "demain" : `dans ${ni} jours`} · 3</small></button>
+    </div>
+    <div class="row" id="flip-row" style="justify-content:center;margin-top:18px"><button class="btn go big" id="c-flip">Voir la réponse</button></div>`;
+  C.flipped = false;
+  const flip = () => { if (C.flipped) return; C.flipped = true; $("#card").classList.add("flip"); $("#grades").hidden = false; $("#flip-row").hidden = true; $("#grades .g-good").focus({ preventScroll: true }); };
+  $("#card").onclick = flip; $("#c-flip").onclick = flip;
+  $("#grades").onclick = e => { const b = e.target.closest("[data-g]"); if (b) grade(+b.dataset.g); };
+  C.flip = flip;
+}
+function grade(g) {
+  const k = C.q.shift(), p = P(k), now = Date.now();
+  const wasKnown = p.box >= 3;
+  p.seen = true; C.reviewed++;
+  if (g === 0) { p.box = 0; p.due = now; C.q.splice(Math.min(3, C.q.length), 0, k); }
+  else if (g === 1) { p.box = Math.max(1, p.box); p.due = now + DAY; }
+  else { p.box = Math.min(6, p.box + 1); p.due = now + INTERVALS[p.box] * DAY - 36e5; }
+  bump("cards"); gain([2, 3, 5][g]);
+  if (!wasKnown && p.box >= 3) setTimeout(() => toast(`${k} est maintenant acquis !`, "i-star"), 400);
+  save(); renderCard();
+}
+document.addEventListener("keydown", e => {
+  if (current !== "cartes" || !C || !C.q.length || !$("#ov").hidden || e.target.matches("input,select")) return;
+  if (e.key === " " || e.key === "Enter") { if (!C.flipped && !e.target.closest("button:not(#card)")) { e.preventDefault(); C.flip(); } }
+  else if (C.flipped && ["1", "2", "3"].includes(e.key)) grade(+e.key - 1);
+});
+
+/* ---------- QUIZ ---------- */
+let Q = null;
+const pickOpts = (correct, cands, n = 4) => shuffle([correct, ...[...new Set(cands.filter(c => c !== correct))].slice(0, n - 1)]);
+async function renderQuizView() {
+  await ensureLevel(S.sel.lvl); if (!S.sel.stage) S.sel.stage = stagesOf(S.sel.lvl)[0];
+  $("#q-scope").innerHTML = scopeHTML("q"); bindScope("q", () => { Q = null; renderQuizView(); });
+  if (!Q) buildQuiz();
+  renderQuiz();
+}
+function buildQuiz(onlyKs) {
+  const pl = pool(), lvAll = LV[S.sel.lvl];
+  const src = onlyKs ? onlyKs.map(k => BYK[k]) : shuffle(pl).slice(0, 10);
+  const distract = pl.length >= 8 ? pl : lvAll;
+  const qs = src.map((d, i) => {
+    let type = ["k2m", "m2k", "read"][i % 3];
+    if (type === "read" && !d.ex.length) type = "k2m";
+    const near = shuffle(distract.filter(x => x.k !== d.k));
+    if (type === "k2m") return { d, prompt: `<div class="ask">Que signifie ce kanji ?</div><div class="kj big">${d.k}</div>`, opts: pickOpts(d.m, near.map(x => x.m)), ans: d.m, cls: "" };
+    if (type === "m2k") return { d, prompt: `<div class="ask">Quel kanji signifie…</div><div class="txt">${esc(d.m)}</div>`, opts: pickOpts(d.k, near.map(x => x.k)), ans: d.k, cls: "kj-opt" };
+    const e = d.ex[Math.random() * d.ex.length | 0];
+    const others = shuffle(lvAll.flatMap(x => x.ex)).filter(x => x[1] !== e[1]).sort((a, b) => Math.abs(a[1].length - e[1].length) - Math.abs(b[1].length - e[1].length)).map(x => x[1]);
+    return { d, prompt: `<div class="ask">Comment se lit ce mot ?</div><div class="word">${esc(e[0])}</div><div class="muted" style="margin-top:4px;font-weight:700">${esc(e[2])}</div>`, opts: pickOpts(e[1], others.slice(0, 12)), ans: e[1], cls: "jp-opt" };
+  });
+  Q = { qs, i: 0, res: [], answered: false };
+}
+function renderQuiz() {
+  const box = $("#quiz");
+  if (Q.i >= Q.qs.length) {
+    const ok = Q.res.filter(Boolean).length, n = Q.qs.length;
+    const missed = [...new Set(Q.qs.filter((q, i) => !Q.res[i]).map(q => q.d.k))];
+    box.innerHTML = `<div class="panel done-box"><svg class="mascot" viewBox="0 0 120 110" aria-hidden="true"><use href="#mochi"/></svg>
+      <span class="eyebrow">Résultat</span><div class="score">${ok}<span class="muted" style="font-size:26px"> / ${n}</span></div>
+      <p class="muted">${ok === n ? "Sans faute. Mochi est fier de toi !" : ok >= n * .7 ? "Très bien. Revois les kanji ratés ci-dessous." : "On continue : revois ces kanji, puis relance un quiz."}</p>
+      ${missed.length ? `<span class="eyebrow">À revoir</span><div class="miss">${missed.map(k => `<button data-k="${k}"><span class="kj">${k}</span><span>${esc(BYK[k].m)}</span></button>`).join("")}</div>` : ""}
+      <div class="row" style="justify-content:center;margin-top:8px">${missed.length ? `<button class="btn" id="qz-miss">Refaire les ${missed.length} ratés</button>` : ""}<button class="btn go" id="qz-new">Nouveau quiz</button></div></div>`;
+    box.querySelectorAll(".miss button").forEach(b => b.onclick = () => openDetail(b.dataset.k));
+    $("#qz-new").onclick = () => { buildQuiz(); renderQuiz(); };
+    if (missed.length) $("#qz-miss").onclick = () => { buildQuiz(missed); renderQuiz(); };
+    return;
+  }
+  const q = Q.qs[Q.i];
+  box.innerHTML = `
+    <div class="qbar" aria-hidden="true">${Q.qs.map((_, i) => `<i class="${i < Q.i ? (Q.res[i] ? "ok" : "ko") : i === Q.i ? "cur" : ""}"></i>`).join("")}</div>
+    <div class="panel prompt">${q.prompt}</div>
+    <div class="opts" role="group" aria-label="Réponses">${q.opts.map((o, i) => `<button class="opt ${q.cls}" data-i="${i}"><span class="k">${i + 1}</span><span>${esc(o)}</span></button>`).join("")}</div>
+    <div class="qfoot"><span class="muted" style="font-weight:800;font-variant-numeric:tabular-nums">Question ${Q.i + 1} / ${Q.qs.length}</span><span id="qz-fb" aria-live="polite"></span><button class="btn go" id="qz-next" hidden>Suivant</button></div>`;
+  Q.answered = false;
+  box.querySelectorAll(".opt").forEach(b => b.onclick = () => answer(+b.dataset.i));
+  $("#qz-next").onclick = () => { Q.i++; if (Q.i >= Q.qs.length) finishQuiz(); renderQuiz(); };
+}
+function answer(i) {
+  if (Q.answered) return; Q.answered = true;
+  const q = Q.qs[Q.i], ok = q.opts[i] === q.ans, p = P(q.d.k);
+  Q.res[Q.i] = ok; p.seen = true; ok ? p.ok++ : p.ko++; save();
+  document.querySelectorAll(".opt").forEach((b, j) => { b.disabled = true; if (q.opts[j] === q.ans) b.classList.add("ok"); else if (j === i) b.classList.add("ko"); });
+  $("#qz-fb").innerHTML = ok ? `<b style="color:var(--ok)">Correct !</b>` : `<b style="color:var(--ko)">Raté</b> <span class="muted">· ${q.d.k} = ${esc(q.d.m)}</span>`;
+  $("#qz-next").hidden = false; $("#qz-next").focus({ preventScroll: true });
+}
+function finishQuiz() {
+  const ok = Q.res.filter(Boolean).length;
+  gain(ok * 4 + (ok === Q.qs.length ? 20 : 0), ok === Q.qs.length ? "quiz sans faute" : "quiz");
+  if (Q.qs.length >= 7 && ok >= 7) bump("quiz");
+}
+document.addEventListener("keydown", e => {
+  if (current !== "quiz" || !Q || Q.i >= Q.qs.length || !$("#ov").hidden || e.target.matches("select")) return;
+  if (!Q.answered && ["1", "2", "3", "4"].includes(e.key)) answer(+e.key - 1);
+});
+
+
+/* ---------- PROFILE ---------- */
+function applyTheme() {
+  const t = S.theme || "system";
+  if (t === "system") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", t);
+}
+function renderProfile() {
+  const v = $("#v-profil"), l = lvlFromXp(S.xp), cur = S.xp - xpFor(l), need = xpFor(l + 1) - xpFor(l);
+  let known = 0, learn = 0, perfect = 0, ok = 0, ko = 0;
+  for (const k in S.p) { const p = S.p[k], st = status(k); if (st === "known") known++; else if (st === "learn") learn++; if (p.trace > 0) perfect++; ok += p.ok || 0; ko += p.ko || 0; }
+  const acc = ok + ko ? Math.round(ok / (ok + ko) * 100) + " %" : "—";
+  const nextT = TITLES.find(t => t[0] > l);
+  v.innerHTML = `
+    <div class="panel pad" style="display:flex;flex-direction:column;gap:14px">
+      <div class="prof-top">
+        <div class="avatar" aria-hidden="true">${esc((S.name || "字").trim().charAt(0).toUpperCase() || "字")}</div>
+        <div style="flex:1;min-width:0">
+          <label class="eyebrow" for="p-name">Ton prénom</label>
+          <input class="name-in" id="p-name" maxlength="24" placeholder="Comment t’appelles-tu ?" value="${esc(S.name || "")}">
+        </div>
+      </div>
+      <div>
+        <div class="row" style="justify-content:space-between;font-weight:800;font-size:13.5px"><span>Niveau ${l} · ${titleOf(l)}</span><span class="muted" style="font-variant-numeric:tabular-nums">${cur} / ${need} XP</span></div>
+        <div class="bar" style="margin-top:5px"><i style="width:${(cur / need * 100).toFixed(1)}%;background:var(--amber)"></i></div>
+        ${nextT ? `<div class="muted" style="font-size:12.5px;font-weight:700;margin-top:5px">Prochain rang : « ${nextT[1]} » au niveau ${nextT[0]}</div>` : ""}
+      </div>
+    </div>
+    <div class="panel pad">
+      <h3 style="margin-bottom:12px">Statistiques</h3>
+      <div class="sgrid">
+        <div><b>${streakNow()}</b><span>jours d’affilée</span></div>
+        <div><b>${S.best || 0}</b><span>meilleure série</span></div>
+        <div><b>${known}</b><span>kanji acquis</span></div>
+        <div><b>${learn}</b><span>kanji en cours</span></div>
+        <div><b>${perfect}</b><span>kanji tracés sans faute</span></div>
+        <div><b>${acc}</b><span>bonnes réponses au quiz</span></div>
+        <div><b>${S.xp}</b><span>XP au total</span></div>
+        <div><b>${dueAll().length + vDueAll().length + gDueAll().length}</b><span>cartes à réviser</span></div>
+        <div><b>${Object.keys(S.vp || {}).filter(k => vstatus(k) === "known").length}</b><span>mots acquis</span></div>
+        <div><b>${Object.keys(S.vp || {}).filter(k => vstatus(k) === "learn").length}</b><span>mots en cours</span></div>
+        <div><b>${Object.keys(S.gp || {}).filter(k => gstatus(k) === "known").length}</b><span>points de grammaire acquis</span></div>
+        <div><b>${Object.keys(S.gp || {}).filter(k => gstatus(k) === "learn").length}</b><span>points de grammaire en cours</span></div>
+      </div>
+    </div>
+    <div class="panel pad">
+      <h3 style="margin-bottom:6px">Kanji par niveau</h3>
+      ${REGIONS.map(r => { const s = levelStats(r.id); return `<div class="lvrow" style="--rc:${r.c}"><span class="kj">${r.kj}</span>
+        <div style="min-width:0"><b style="font-size:14px">${r.lv} · ${r.name}</b><div class="bar" style="margin-top:4px"><i style="width:${(s.known / r.n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(s.learn / r.n * 100).toFixed(1)}%;background:var(--amber)"></i></div></div>
+        <span class="n">${s.known} / ${r.n}</span></div>`; }).join("")}
+    </div>
+    <div class="panel pad">
+      <h3 style="margin-bottom:12px">Rangs</h3>
+      <div class="ranks">${TITLES.map((t, i) => { const on = l >= t[0], isCur = on && (!TITLES[i + 1] || l < TITLES[i + 1][0]); return `<div class="rank ${on ? "on" : "off"} ${isCur ? "cur" : ""}"><span class="rb">${t[0]}</span><span>${t[1]}</span><span class="rt">${isCur ? "Rang actuel" : on ? "Obtenu" : `Niveau ${t[0]}`}</span></div>`; }).join("")}</div>
+    </div>
+    <div class="panel pad set">
+      <h3>Réglages</h3>
+      <div class="line"><span style="font-weight:700">Apparence</span><div class="seg" role="group" aria-label="Apparence">${[["system", "Auto"], ["light", "Clair"], ["dark", "Sombre"]].map(([k, t]) => `<button data-th="${k}" aria-pressed="${(S.theme || "system") === k}">${t}</button>`).join("")}</div></div>
+      <div class="line"><span style="font-weight:700">Cartes</span><div class="seg" role="group" aria-label="Sens des cartes"><button data-dir="k" aria-pressed="${S.dir === "k"}">Kanji → sens</button><button data-dir="m" aria-pressed="${S.dir === "m"}">Sens → kanji</button></div></div>
+      <div class="line"><span style="font-weight:700">Tracé</span><div class="seg" role="group" aria-label="Mode de tracé"><button data-md="guide" aria-pressed="${S.mode === "guide"}">Guidé</button><button data-md="mem" aria-pressed="${S.mode === "mem"}">De mémoire</button></div></div>
+      <p class="muted" style="font-size:12.5px;margin:0">Ta progression est enregistrée dans ce navigateur, sur cet appareil uniquement.</p>
+      <div id="p-reset-box"><button class="btn danger" id="p-reset">Effacer ma progression</button></div>
+    </div>
+    <p class="muted" style="font-size:12px;margin:0;text-align:center">Sources : ordre des traits KanjiVG (CC BY-SA 3.0) · kanji KANJIDIC2 et vocabulaire JMdict, EDRDG (CC BY-SA 4.0) · listes JLPT open-anki-jlpt-decks.</p>`;
+  v.children[2].insertAdjacentHTML("afterend", vocabProfileHTML() + gramProfileHTML());
+  $("#p-name").oninput = e => { S.name = e.target.value.trim(); save(); v.querySelector(".avatar").textContent = (S.name || "字").charAt(0).toUpperCase(); };
+  v.querySelectorAll("[data-th]").forEach(b => b.onclick = () => { S.theme = b.dataset.th; save(); applyTheme(); renderProfile(); });
+  v.querySelectorAll("[data-dir]").forEach(b => b.onclick = () => { S.dir = b.dataset.dir; save(); renderProfile(); });
+  v.querySelectorAll("[data-md]").forEach(b => b.onclick = () => { S.mode = b.dataset.md; save(); renderProfile(); });
+  $("#p-reset").onclick = () => {
+    $("#p-reset-box").innerHTML = `<div class="confirm"><b>Effacer toute ta progression ?</b><p style="margin:4px 0 10px;font-size:13.5px">Kanji, mots et grammaire appris, XP, série et quêtes seront remis à zéro. C’est définitif.</p><div class="row"><button class="btn" id="p-cancel">Annuler</button><button class="btn danger" id="p-ok">Oui, tout effacer</button></div></div>`;
+    $("#p-cancel").onclick = renderProfile;
+    $("#p-ok").onclick = () => { S = { p: {}, vp: {}, gp: {}, vsel: S.vsel, gsel: S.gsel, vdir: S.vdir, xp: 0, streak: 0, lastDay: null, best: 0, sel: { lvl: "n5", stage: null }, dir: S.dir, mode: S.mode, theme: S.theme, name: S.name, trK: null, day: null, started: false, migrated: true }; T = null; C = null; Q = null; VC = null; VQ = null; GC = null; GQ = null; dayState(); save(); renderHud(); renderProfile(); toast("Progression effacée", "i-check"); };
+  };
+}
+
+
+/* ---------- SUBNAV ---------- */
+const KSUB = [["kanji", "Liste"], ["trace", "Tracé"], ["cartes", "Cartes"], ["quiz", "Quiz"]];
+const VSUB = [["vocab", "Liste"], ["vcartes", "Cartes"], ["vquiz", "Quiz"]];
+const subnav = (list, cur) => `<nav class="subnav" aria-label="Activités">${list.map(([h, t]) => `<a href="#${h}" ${h === cur ? 'aria-current="page"' : ""}>${t}</a>`).join("")}</nav>`;
+
+/* ---------- VOCAB data ---------- */
+const VREG = REGIONS;
+const VN = { n5: 712, n4: 661, n3: 2047, n2: 1749, n1: 2699 };
+const VTYPES = [["all", "Tous"], ["v", "Verbes"], ["a", "Adjectifs"], ["n", "Noms"], ["d", "Adverbes"], ["o", "Autres"]];
+const TLAB = { v: "verbe", a: "adjectif", n: "nom", d: "adverbe", o: "autre" };
+const VL = {}, VBYK = {}, VEN = {}, vloading = {};
+function ensureVocab(id) {
+  if (VL[id]) return Promise.resolve(VL[id]);
+  return vloading[id] ||= fetch(`data/v-${id}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(o => {
+    VEN[id] = o.en;
+    o.words.forEach(w => { w.key = w.w + "|" + w.r; w.l = id; VBYK[w.key] = w; if (S.vp && S.vp[w.key] && !S.vp[w.key].l) S.vp[w.key].l = id; });
+    VL[id] = o.words; return o.words;
+  });
+}
+const VS = () => (S.vsel ||= { lvl: "n5", t: "all" });
+const VP = k => { S.vp ||= {}; const p = (S.vp[k] ||= { box: 0, due: 0, seen: false, ok: 0, ko: 0 }); if (!p.l && VBYK[k]) p.l = VBYK[k].l; return p; };
+const vstatus = k => { const p = S.vp && S.vp[k]; if (!p || !p.seen) return "new"; return p.box >= 3 ? "known" : "learn"; };
+const vpool = () => { const s = VS(), a = VL[s.lvl] || []; return s.t === "all" ? a : a.filter(w => w.t === s.t); };
+const vLevelStats = id => { let known = 0, learn = 0; for (const k in (S.vp || {})) { const p = S.vp[k]; if (p.l !== id || !p.seen) continue; p.box >= 3 ? known++ : learn++; } return { known, learn }; };
+const vDueAll = () => { const now = Date.now(); return Object.keys(S.vp || {}).filter(k => S.vp[k].seen && S.vp[k].due <= now); };
+const face = w => w.w.split("; ")[0];
+const hasKanji = s => /[一-鿿]/.test(s);
+const EN_TAG = '<span class="en-tag" title="Traduction en anglais">EN</span>';
+
+
+function tcardHTML(attr, val, label, items, stFn, on) {
+  if (!items.length) return "";
+  let k = 0, l = 0; items.forEach(x => { const st = stFn(x); if (st === "known") k++; else if (st === "learn") l++; });
+  const n = items.length, pc = x => (x / n * 100).toFixed(1) + "%";
+  return `<button class="tcard" data-${attr}="${esc(val)}" aria-pressed="${on}" aria-label="${esc(label)} : ${k} acquis, ${l} en cours sur ${n}"><span class="tl">${esc(label)}</span><span class="tn">${k}/${n}</span><span class="tb"><i style="width:${pc(k)};background:var(--leaf)"></i><i style="width:${pc(l)};background:var(--amber)"></i></span></button>`;
+}
+
+/* ---------- VOCAB list ---------- */
+async function renderVocab() {
+  const v = $("#v-vocab"), s = VS(), r = RG[s.lvl];
+  if (!VL[s.lvl]) { v.innerHTML = subnav(VSUB, "vocab") + `<div class="loading">Chargement du vocabulaire ${r.lv}…</div>`; await ensureVocab(s.lvl); if (current !== "vocab") return; }
+  const all = VL[s.lvl], st = vLevelStats(s.lvl), n = all.length;
+  v.innerHTML = `${subnav(VSUB, "vocab")}
+    ${levelTabs(REGIONS, s.lvl)}
+    <div class="panel pad banner" style="--rc:${r.c}"><span class="medal">${r.kj}</span>
+      <div style="min-width:0"><span class="eyebrow">${r.lv} · ${n} mots</span><h2>Vocabulaire ${r.lv}</h2>
+      ${VEN[s.lvl] ? `<p class="muted" style="margin:2px 0 0;font-size:13px;font-weight:700">Traductions en anglais pour ce niveau.</p>` : ""}
+      <div class="bar" style="margin-top:8px"><i style="width:${(st.known / n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(st.learn / n * 100).toFixed(1)}%;background:var(--amber)"></i></div>
+      <div class="muted" style="font-size:12.5px;font-weight:700;margin-top:4px">${st.known} acquis · ${st.learn} en cours · ${n - st.known - st.learn} à découvrir</div></div></div>
+    <div class="tchips" role="group" aria-label="Progression et filtre par type">${VTYPES.map(([t, lab]) => tcardHTML("t", t, lab, t === "all" ? all : all.filter(w => w.t === t), w => vstatus(w.key), s.t === t)).join("")}</div>
+    <input class="search" id="vq" type="search" placeholder="Chercher un mot, une lecture ou un sens" aria-label="Chercher un mot">
+    <div class="wlist" id="wlist"></div>`;
+  v.querySelectorAll(".reg-tab:not([disabled])").forEach(b => b.onclick = () => { S.vsel = { lvl: b.dataset.r, t: "all" }; VC = null; VQ = null; save(); renderVocab(); });
+  v.querySelectorAll(".tcard").forEach(b => b.onclick = () => { VS().t = b.dataset.t; VC = null; VQ = null; save(); renderVocab(); });
+  v.querySelectorAll(".play button").forEach(b => b.onclick = () => { VC = null; VQ = null; S.vcScope = "sel"; save(); location.hash = b.dataset.go; });
+  $("#vq").oninput = renderWlist; renderWlist();
+}
+function renderWlist() {
+  const q = ($("#vq").value || "").trim().toLowerCase();
+  const list = (q ? VL[VS().lvl] : vpool()).filter(w => !q || w.w.includes(q) || w.r.includes(q) || (w.a || "").includes(q) || w.m.toLowerCase().includes(q));
+  $("#wlist").innerHTML = list.length ? list.map(w => { const st = vstatus(w.key), f = face(w); return `<button class="wrow ${st}" data-w="${esc(w.key)}"><span class="ww"><span class="kj">${esc(f)}</span>${w.r !== f ? `<small>${esc(w.r)}</small>` : ""}</span><span class="wm">${esc(w.m)}</span><i class="dot ${st}"></i></button>`; }).join("")
+    : `<div class="empty">Aucun mot du ${RG[VS().lvl].lv} ne correspond à « ${esc(q)} ».</div>`;
+}
+$("#v-vocab").addEventListener("click", e => { const b = e.target.closest(".wrow"); if (b) openWord(b.dataset.w); });
+
+function openWord(key) {
+  const w = VBYK[key], st = vstatus(key), r = RG[w.l];
+  const stLbl = { new: "À découvrir", learn: "En cours", known: "Acquis" }[st];
+  lastFocus = document.activeElement;
+  $("#dlg").innerHTML = `
+    <button class="x" id="d-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="wdlg">
+      <div class="wbig kj">${esc(face(w))}</div>
+      <div class="wread">${esc(w.r)}${canSpeak ? `<button class="speak" data-say="${esc(w.r)}" aria-label="Écouter ${esc(w.r)}"><svg><use href="#i-speak"/></svg></button>` : ""}</div>
+      ${w.a ? `<div class="muted" style="font-weight:700">Aussi écrit <span class="kj" style="font-size:18px;color:var(--ink)">${esc(w.a)}</span></div>` : ""}
+      <div class="meaning" id="d-m" style="padding:0;margin-top:12px">${esc(w.m)}${VEN[w.l] ? EN_TAG : ""}</div>
+      <div class="row" style="gap:6px;margin-top:10px;justify-content:center"><span class="tag" style="border-color:${r.c}">${r.lv}</span><span class="tag"><i class="dot ${st}"></i>${stLbl}</span><span class="tag">${esc(w.p || TLAB[w.t])}</span></div>
+      ${w.k ? `<div class="h3">Kanji du mot</div><div class="wk">${w.k.map(([c, l]) => `<button data-k="${c}" data-l="${l}" aria-label="Voir le kanji ${c}"><span class="kj">${c}</span><span>${RG[l].lv}</span></button>`).join("")}</div>` : ""}
+    </div>`;
+  $("#ov").hidden = false; document.body.style.overflow = "hidden"; $("#d-x").focus();
+  $("#d-x").onclick = closeDetail;
+  $("#dlg").querySelectorAll(".speak").forEach(b => b.onclick = () => speak(b.dataset.say));
+  $("#dlg").querySelectorAll(".wk button").forEach(b => b.onclick = async () => { await ensureLevel(b.dataset.l); openDetail(b.dataset.k); });
+}
+
+/* ---------- VOCAB scope ---------- */
+function vscopeHTML(p) {
+  const s = VS();
+  return `<span class="lbl">Je joue avec</span>
+    <label class="sr" for="${p}-lv">Niveau</label><select id="${p}-lv">${VREG.map(r => `<option value="${r.id}" ${r.id === s.lvl ? "selected" : ""}>${r.lv} · ${VN[r.id]} mots</option>`).join("")}</select>
+    <label class="sr" for="${p}-t">Type</label><select id="${p}-t">${VTYPES.map(([t, l]) => `<option value="${t}" ${t === s.t ? "selected" : ""}>${t === "all" ? "Tous les types" : l}</option>`).join("")}</select>`;
+}
+function bindVScope(p, onChange) {
+  $(`#${p}-lv`).onchange = async e => { S.vsel = { lvl: e.target.value, t: VS().t }; save(); await ensureVocab(VS().lvl); onChange(); };
+  $(`#${p}-t`).onchange = e => { VS().t = e.target.value; save(); onChange(); };
+}
+
+/* ---------- VOCAB cards ---------- */
+let VC = null;
+async function renderVCards() {
+  await ensureVocab(VS().lvl);
+  const due = vDueAll();
+  await Promise.all([...new Set(due.map(k => S.vp[k].l).filter(Boolean))].map(ensureVocab));
+  const scope = S.vcScope || "sel", vdir = S.vdir || "w";
+  $("#vc-scope").innerHTML = `<div class="seg" role="group" aria-label="Paquet"><button id="vcs-sel" aria-pressed="${scope === "sel"}">Ma sélection</button><button id="vcs-due" aria-pressed="${scope === "due"}">Toutes mes révisions (${due.filter(k => VBYK[k]).length})</button></div>
+    ${scope === "sel" ? vscopeHTML("vc") : ""}
+    <div class="seg" role="group" aria-label="Sens des cartes"><button id="vdir-w" aria-pressed="${vdir === "w"}">Japonais → sens</button><button id="vdir-m" aria-pressed="${vdir === "m"}">Sens → japonais</button></div>`;
+  $("#vcs-sel").onclick = () => { S.vcScope = "sel"; VC = null; save(); renderVCards(); };
+  $("#vcs-due").onclick = () => { S.vcScope = "due"; VC = null; save(); renderVCards(); };
+  if (scope === "sel") bindVScope("vc", () => { VC = null; renderVCards(); });
+  $("#vdir-w").onclick = () => { S.vdir = "w"; save(); renderVCards(); };
+  $("#vdir-m").onclick = () => { S.vdir = "m"; save(); renderVCards(); };
+  if (!VC) buildVDeck(false);
+  renderVCard();
+}
+function buildVDeck(all) {
+  const now = Date.now();
+  const src = S.vcScope === "due" ? vDueAll().filter(k => VBYK[k]).map(k => VBYK[k]) : vpool();
+  const due = shuffle(src.filter(w => S.vp && S.vp[w.key] && S.vp[w.key].seen && S.vp[w.key].due <= now));
+  const fresh = S.vcScope === "due" ? [] : shuffle(src.filter(w => vstatus(w.key) === "new")).slice(0, 10);
+  const q = all ? shuffle(src) : [...due, ...fresh];
+  VC = { q: q.map(w => w.key), flipped: false, reviewed: 0 };
+}
+function renderVCard() {
+  const st = $("#vstage");
+  if (!VC.q.length) {
+    st.innerHTML = `<div class="panel done-box"><svg class="mascot" viewBox="0 0 120 110" aria-hidden="true"><use href="#mochi"/></svg>
+      <h2>${VC.reviewed ? `Session terminée : ${plural(VC.reviewed, "mot")} revu${VC.reviewed > 1 ? "s" : ""}` : "Rien à réviser ici pour l’instant"}</h2>
+      <p class="muted">Tu peux découvrir de nouveaux mots ou revoir toute ta sélection librement.</p>
+      <div class="row" style="justify-content:center"><button class="btn go" id="vc-more">Nouveaux mots</button><button class="btn" id="vc-free">Révision libre</button></div></div>`;
+    $("#vc-more").onclick = () => { S.vcScope = "sel"; buildVDeck(false); if (!VC.q.length) buildVDeck(true); renderVCards(); };
+    $("#vc-free").onclick = () => { S.vcScope = "sel"; buildVDeck(true); renderVCards(); };
+    return;
+  }
+  const w = VBYK[VC.q[0]], p = S.vp && S.vp[w.key], isNew = !p || !p.seen, f = face(w);
+  const front = (S.vdir || "w") === "w"
+    ? `<div class="wbig kj">${esc(f)}</div>`
+    : `<div class="q">${esc(w.m)}</div><div class="muted" style="margin-top:8px;font-weight:700">Comment dit-on ça en japonais ?</div>`;
+  const nb = Math.min(6, ((p && p.box) || 0) + 1), ni = INTERVALS[nb];
+  st.innerHTML = `
+    <div class="row" style="justify-content:space-between;margin-bottom:12px"><span class="tag">${RG[w.l].lv} · ${esc(TLAB[w.t])}</span><span class="muted" style="font-weight:800;font-size:13px;font-variant-numeric:tabular-nums">${VC.q.length} dans la pile · ${VC.reviewed} revus</span></div>
+    <div class="card" id="vcard" tabindex="0" role="button" aria-label="Retourner la carte">
+      <div class="card-in">
+        <div class="face front"><span class="tag ftag" style="${isNew ? "background:var(--sakura-soft)" : ""}">${isNew ? "Nouveau mot" : "Révision"}</span>${front}<span class="tap">Touche la carte ou <span class="kbd">Espace</span></span></div>
+        <div class="face back" style="justify-content:center">
+          <div class="wbig kj" style="font-size:clamp(36px,10vw,52px)">${esc(f)}</div>
+          <div style="font-size:19px;font-weight:800">${esc(w.r)}</div>
+          ${w.a ? `<div class="muted" style="font-size:13px;font-weight:700">Aussi écrit ${esc(w.a)}</div>` : ""}
+          <div class="meaning" style="padding:0;margin-top:10px;font-size:20px">${esc(w.m)}${VEN[w.l] ? EN_TAG : ""}</div>
+          <div class="muted" style="font-size:13px;font-weight:700;margin-top:6px">${esc(w.p || TLAB[w.t])}</div>
+        </div>
+      </div>
+    </div>
+    <div class="grades" id="vgrades" hidden>
+      <button class="btn g-again" data-g="0">À revoir<small>tout à l’heure · 1</small></button>
+      <button class="btn g-hard" data-g="1">Difficile<small>demain · 2</small></button>
+      <button class="btn g-good" data-g="2">Je sais<small>${ni === 1 ? "demain" : `dans ${ni} jours`} · 3</small></button>
+    </div>
+    <div class="row" id="vflip-row" style="justify-content:center;margin-top:18px"><button class="btn go big" id="vc-flip">Voir la réponse</button></div>`;
+  VC.flipped = false;
+  const flip = () => { if (VC.flipped) return; VC.flipped = true; $("#vcard").classList.add("flip"); $("#vgrades").hidden = false; $("#vflip-row").hidden = true; if (canSpeak && S.vdir !== "m") {} $("#vgrades .g-good").focus({ preventScroll: true }); };
+  $("#vcard").onclick = flip; $("#vc-flip").onclick = flip;
+  $("#vgrades").onclick = e => { const b = e.target.closest("[data-g]"); if (b) vgrade(+b.dataset.g); };
+  VC.flip = flip;
+}
+function vgrade(g) {
+  const k = VC.q.shift(), p = VP(k), now = Date.now(), wasKnown = p.box >= 3;
+  p.seen = true; VC.reviewed++;
+  if (g === 0) { p.box = 0; p.due = now; VC.q.splice(Math.min(3, VC.q.length), 0, k); }
+  else if (g === 1) { p.box = Math.max(1, p.box); p.due = now + DAY; }
+  else { p.box = Math.min(6, p.box + 1); p.due = now + INTERVALS[p.box] * DAY - 36e5; }
+  bump("cards"); gain([2, 3, 5][g]);
+  if (!wasKnown && p.box >= 3) setTimeout(() => toast(`${face(VBYK[k])} est maintenant acquis !`, "i-star"), 400);
+  save(); renderVCard();
+}
+
+/* ---------- VOCAB quiz ---------- */
+let VQ = null;
+async function renderVQuizView() {
+  await ensureVocab(VS().lvl);
+  $("#vq-scope").innerHTML = vscopeHTML("vqz"); bindVScope("vqz", () => { VQ = null; renderVQuizView(); });
+  if (!VQ) buildVQuiz();
+  renderVQuiz();
+}
+function buildVQuiz(only) {
+  const pl = vpool(), all = VL[VS().lvl];
+  const src = only ? only.map(k => VBYK[k]) : shuffle(pl).slice(0, 10);
+  const distractPool = pl.length >= 8 ? pl : all;
+  const qs = src.map((w, i) => {
+    let type = ["w2m", "m2w", "read"][i % 3];
+    if (type === "read" && !hasKanji(face(w))) type = "w2m";
+    const near = shuffle(distractPool.filter(x => x.key !== w.key && x.m !== w.m)).sort((a, b) => (b.t === w.t) - (a.t === w.t));
+    if (type === "w2m") return { w, prompt: `<div class="ask">Que signifie ce mot ?</div><div class="word">${esc(face(w))}</div>${face(w) !== w.r ? `<div class="muted" style="font-weight:800">${esc(w.r)}</div>` : ""}`, opts: pickOpts(w.m, near.map(x => x.m)), ans: w.m, cls: "" };
+    if (type === "m2w") return { w, prompt: `<div class="ask">Comment dit-on…</div><div class="txt">${esc(w.m)}</div>`, opts: pickOpts(face(w), near.map(x => face(x))), ans: face(w), cls: "jp-opt" };
+    const others = shuffle(all).filter(x => x.r !== w.r).sort((a, b) => Math.abs(a.r.length - w.r.length) - Math.abs(b.r.length - w.r.length)).map(x => x.r);
+    return { w, prompt: `<div class="ask">Comment se lit ce mot ?</div><div class="word">${esc(face(w))}</div><div class="muted" style="margin-top:4px;font-weight:700">${esc(w.m)}</div>`, opts: pickOpts(w.r, others.slice(0, 12)), ans: w.r, cls: "jp-opt" };
+  });
+  VQ = { qs, i: 0, res: [], answered: false };
+}
+function renderVQuiz() {
+  const box = $("#vquizbox");
+  if (VQ.i >= VQ.qs.length) {
+    const ok = VQ.res.filter(Boolean).length, n = VQ.qs.length;
+    const missed = [...new Set(VQ.qs.filter((q, i) => !VQ.res[i]).map(q => q.w.key))];
+    box.innerHTML = `<div class="panel done-box"><svg class="mascot" viewBox="0 0 120 110" aria-hidden="true"><use href="#mochi"/></svg>
+      <span class="eyebrow">Résultat</span><div class="score">${ok}<span class="muted" style="font-size:26px"> / ${n}</span></div>
+      <p class="muted">${ok === n ? "Sans faute, bravo !" : ok >= n * .7 ? "Très bien. Revois les mots ratés ci-dessous." : "On continue : revois ces mots, puis relance un quiz."}</p>
+      ${missed.length ? `<span class="eyebrow">À revoir</span><div class="miss">${missed.map(k => `<button data-w="${esc(k)}"><span class="kj">${esc(face(VBYK[k]))}</span><span>${esc(VBYK[k].m)}</span></button>`).join("")}</div>` : ""}
+      <div class="row" style="justify-content:center;margin-top:8px">${missed.length ? `<button class="btn" id="vqz-miss">Refaire les ${missed.length} ratés</button>` : ""}<button class="btn go" id="vqz-new">Nouveau quiz</button></div></div>`;
+    box.querySelectorAll(".miss button").forEach(b => b.onclick = () => openWord(b.dataset.w));
+    $("#vqz-new").onclick = () => { buildVQuiz(); renderVQuiz(); };
+    if (missed.length) $("#vqz-miss").onclick = () => { buildVQuiz(missed); renderVQuiz(); };
+    return;
+  }
+  const q = VQ.qs[VQ.i];
+  box.innerHTML = `
+    <div class="qbar" aria-hidden="true">${VQ.qs.map((_, i) => `<i class="${i < VQ.i ? (VQ.res[i] ? "ok" : "ko") : i === VQ.i ? "cur" : ""}"></i>`).join("")}</div>
+    <div class="panel prompt">${q.prompt}</div>
+    <div class="opts" role="group" aria-label="Réponses">${q.opts.map((o, i) => `<button class="opt ${q.cls}" data-i="${i}"><span class="k">${i + 1}</span><span>${esc(o)}</span></button>`).join("")}</div>
+    <div class="qfoot"><span class="muted" style="font-weight:800;font-variant-numeric:tabular-nums">Question ${VQ.i + 1} / ${VQ.qs.length}</span><span id="vqz-fb" aria-live="polite"></span><button class="btn go" id="vqz-next" hidden>Suivant</button></div>`;
+  VQ.answered = false;
+  box.querySelectorAll(".opt").forEach(b => b.onclick = () => vanswer(+b.dataset.i));
+  $("#vqz-next").onclick = () => { VQ.i++; if (VQ.i >= VQ.qs.length) { const ok = VQ.res.filter(Boolean).length; gain(ok * 4 + (ok === VQ.qs.length ? 20 : 0), ok === VQ.qs.length ? "quiz sans faute" : "quiz"); if (VQ.qs.length >= 7 && ok >= 7) bump("quiz"); } renderVQuiz(); };
+}
+function vanswer(i) {
+  if (VQ.answered) return; VQ.answered = true;
+  const q = VQ.qs[VQ.i], ok = q.opts[i] === q.ans, p = VP(q.w.key);
+  VQ.res[VQ.i] = ok; p.seen = true; ok ? p.ok++ : p.ko++; save();
+  $("#vquizbox").querySelectorAll(".opt").forEach((b, j) => { b.disabled = true; if (q.opts[j] === q.ans) b.classList.add("ok"); else if (j === i) b.classList.add("ko"); });
+  $("#vqz-fb").innerHTML = ok ? `<b style="color:var(--ok)">Correct !</b>` : `<b style="color:var(--ko)">Raté</b> <span class="muted">· ${esc(face(q.w))} = ${esc(q.w.m)}</span>`;
+  $("#vqz-next").hidden = false; $("#vqz-next").focus({ preventScroll: true });
+}
+document.addEventListener("keydown", e => {
+  if (!$("#ov").hidden || e.target.matches("input,select")) return;
+  if (current === "vcartes" && VC && VC.q.length) {
+    if (e.key === " " || e.key === "Enter") { if (!VC.flipped && !e.target.closest("button:not(#vcard)")) { e.preventDefault(); VC.flip(); } }
+    else if (VC.flipped && ["1", "2", "3"].includes(e.key)) vgrade(+e.key - 1);
+  }
+  if (current === "vquiz" && VQ && VQ.i < VQ.qs.length && !VQ.answered && ["1", "2", "3", "4"].includes(e.key)) vanswer(+e.key - 1);
+});
+
+/* ---------- VOCAB on home & profile ---------- */
+function vocabHomeHTML() {
+  const due = vDueAll().length;
+  return `<div class="row" style="justify-content:space-between;margin-top:6px"><h2>Vocabulaire</h2>${due ? `<button class="btn" id="h-vrev"><svg><use href="#i-cards"/></svg>Réviser ${plural(due, "mot")}</button>` : `<span class="muted" style="font-weight:700;font-size:13.5px">7 868 mots, du N5 au N1</span>`}</div>
+    <div class="map">${VREG.map(r => { const s = vLevelStats(r.id), n = VN[r.id]; return `
+      <button class="region" data-vr="${r.id}" style="--rc:${r.c}"><span class="medal">${r.kj}</span><span class="lv">${r.lv}</span><b>${n} mots</b>
+        <span class="bar"><i style="width:${(s.known / n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(s.learn / n * 100).toFixed(1)}%;background:var(--amber)"></i></span>
+        <span class="nums"><span>${s.known} acquis</span><span>${s.learn} en cours</span></span></button>`; }).join("")}</div>`;
+}
+function bindVocabHome(v) {
+  v.querySelectorAll("[data-vr]").forEach(b => b.onclick = () => { S.vsel = { lvl: b.dataset.vr, t: "all" }; VC = null; VQ = null; save(); location.hash = "vocab"; });
+  const rb = v.querySelector("#h-vrev"); if (rb) rb.onclick = () => { S.vcScope = "due"; VC = null; save(); location.hash = "vcartes"; };
+}
+function vocabProfileHTML() {
+  return `<div class="panel pad"><h3 style="margin-bottom:6px">Vocabulaire par niveau</h3>
+    ${VREG.map(r => { const s = vLevelStats(r.id), n = VN[r.id]; return `<div class="lvrow" style="--rc:${r.c}"><span class="kj">${r.kj}</span>
+      <div style="min-width:0"><b style="font-size:14px">${r.lv} · ${n} mots</b><div class="bar" style="margin-top:4px"><i style="width:${(s.known / n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(s.learn / n * 100).toFixed(1)}%;background:var(--amber)"></i></div></div>
+      <span class="n">${s.known} / ${n}</span></div>`; }).join("")}</div>`;
+}
+
+
+/* ---------- GRAMMAR ---------- */
+const GSUB = [["grammaire", "Liste"], ["gcartes", "Cartes"], ["gquiz", "Quiz"]];
+const GN = { n5: 50, n4: 46, n3: 80, n2: 90 };
+const GL = {}, GBYK = {}, gloading = {};
+function ensureGram(id) {
+  if (GL[id]) return Promise.resolve(GL[id]);
+  return gloading[id] ||= fetch(`data/g-${id}.json`).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); }).then(arr => {
+    arr.forEach(p => { p.l = id; GBYK[p.id] = p; });
+    GL[id] = arr; return arr;
+  });
+}
+const GS = () => (S.gsel ||= { lvl: "n5", c: "all" });
+const GP = k => { S.gp ||= {}; const p = (S.gp[k] ||= { box: 0, due: 0, seen: false, ok: 0, ko: 0 }); p.l = k.split("-")[0]; return p; };
+const gstatus = k => { const p = S.gp && S.gp[k]; if (!p || !p.seen) return "new"; return p.box >= 3 ? "known" : "learn"; };
+const gpool = () => { const s = GS(), a = GL[s.lvl] || []; return s.c === "all" ? a : a.filter(p => p.c === s.c); };
+const gLevelStats = id => { let known = 0, learn = 0; for (const k in (S.gp || {})) { if (!k.startsWith(id + "-")) continue; const st = gstatus(k); if (st === "known") known++; else if (st === "learn") learn++; } return { known, learn }; };
+const gDueAll = () => { const now = Date.now(); return Object.keys(S.gp || {}).filter(k => S.gp[k].seen && S.gp[k].due <= now); };
+const markEx = jp => esc(jp).replace(/\[(.*?)\]/, "<mark>$1</mark>");
+const plainEx = jp => jp.replace(/[\[\]]/g, "");
+const blankEx = jp => esc(jp).replace(/\[(.*?)\]/, '<span class="blank">？</span>');
+const blankOf = jp => jp.match(/\[(.*?)\]/)[1];
+function levelTabs(list, cur, avail) {
+  return `<div class="reg-tabs" role="group" aria-label="Niveau JLPT">${list.map(x => { const ok = !avail || avail.includes(x.id); return `<button class="reg-tab" data-r="${x.id}" style="--rc:${x.c}" aria-pressed="${x.id === cur}" ${ok ? "" : 'disabled title="Bientôt disponible"'}><span class="kj">${x.kj}</span>${x.lv}</button>`; }).join("")}</div>`;
+}
+
+async function renderGram() {
+  const v = $("#v-grammaire"), s = GS(), r = RG[s.lvl];
+  if (!GL[s.lvl]) { v.innerHTML = subnav(GSUB, "grammaire") + `<div class="loading">Chargement de la grammaire ${r.lv}…</div>`; await ensureGram(s.lvl); if (current !== "grammaire") return; }
+  const all = GL[s.lvl], st = gLevelStats(s.lvl), n = all.length;
+  const cats = [...new Set(all.map(p => p.c))];
+  v.innerHTML = `${subnav(GSUB, "grammaire")}
+    ${levelTabs(REGIONS, s.lvl, ["n5", "n4", "n3", "n2"])}
+    <div class="panel pad banner" style="--rc:${r.c}"><span class="medal">${r.kj}</span>
+      <div style="min-width:0"><span class="eyebrow">${r.lv} · ${n} points</span><h2>Grammaire ${r.lv}</h2>
+      <div class="bar" style="margin-top:8px"><i style="width:${(st.known / n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(st.learn / n * 100).toFixed(1)}%;background:var(--amber)"></i></div>
+      <div class="muted" style="font-size:12.5px;font-weight:700;margin-top:4px">${st.known} acquis · ${st.learn} en cours · ${n - st.known - st.learn} à découvrir</div></div></div>
+    <div class="tchips" role="group" aria-label="Progression et filtre par catégorie">${[["all", "Tous"], ...cats.map(c => [c, c])].map(([c, lab]) => tcardHTML("c", c, lab, c === "all" ? all : all.filter(p => p.c === c), p => gstatus(p.id), s.c === c)).join("")}</div>
+    <input class="search" id="gq" type="search" placeholder="Chercher une forme ou un sens (ex. てから, avant)" aria-label="Chercher un point de grammaire">
+    <div class="wlist" id="glist"></div>
+    <p class="muted" style="font-size:12.5px;text-align:center;margin:0">La grammaire N1 arrive bientôt.</p>`;
+  v.querySelectorAll(".reg-tab:not([disabled])").forEach(b => b.onclick = () => { S.gsel = { lvl: b.dataset.r, c: "all" }; GC = null; GQ = null; save(); renderGram(); });
+  v.querySelectorAll(".tcard").forEach(b => b.onclick = () => { GS().c = b.dataset.c; GC = null; GQ = null; save(); renderGram(); });
+  v.querySelectorAll(".play button").forEach(b => b.onclick = () => { GC = null; GQ = null; S.gcScope = "sel"; save(); location.hash = b.dataset.go; });
+  $("#gq").oninput = renderGlist; renderGlist();
+}
+function renderGlist() {
+  const q = ($("#gq").value || "").trim().toLowerCase();
+  const list = (q ? GL[GS().lvl] : gpool()).filter(p => !q || p.p.toLowerCase().includes(q) || p.m.toLowerCase().includes(q) || p.f.toLowerCase().includes(q) || p.ex.some(e => e[0].includes(q) || e[1].includes(q)));
+  $("#glist").innerHTML = list.length ? list.map(p => { const st = gstatus(p.id); return `<button class="wrow grow ${st}" data-g="${p.id}"><span class="ww"><span class="gp">${esc(p.p)}</span><small>${esc(p.c)}</small></span><span class="wm">${esc(p.m)}</span><i class="dot ${st}"></i></button>`; }).join("")
+    : `<div class="empty">Aucun point de grammaire ne correspond à « ${esc(q)} ».</div>`;
+}
+$("#v-grammaire").addEventListener("click", e => { const b = e.target.closest(".grow"); if (b) openGram(b.dataset.g); });
+
+function exHTML(p) {
+  return `<ul class="gex">${p.ex.map(e => `<li><div class="gj">${markEx(e[0])}</div><div class="gk">${esc(e[1])}${canSpeak ? `<button class="speak" data-say="${esc(e[1])}" aria-label="Écouter la phrase"><svg><use href="#i-speak"/></svg></button>` : ""}</div><div class="gf">${esc(e[2])}</div></li>`).join("")}</ul>`;
+}
+function openGram(id) {
+  const p = GBYK[id], st = gstatus(id), r = RG[p.l];
+  const stLbl = { new: "À découvrir", learn: "En cours", known: "Acquis" }[st];
+  lastFocus = document.activeElement;
+  $("#dlg").innerHTML = `
+    <button class="x" id="d-x" aria-label="Fermer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    <div class="gdlg">
+      <div class="gbig">${esc(p.p)}</div>
+      <div class="meaning" id="d-m" style="padding:0;margin-top:6px">${esc(p.m)}</div>
+      <div class="row" style="gap:6px;margin-top:10px"><span class="tag" style="border-color:${r.c}">${r.lv}</span><span class="tag"><i class="dot ${st}"></i>${stLbl}</span><span class="tag">${esc(p.c)}</span></div>
+      <div class="h3">Formation</div><div class="form-box">${esc(p.f)}</div>
+      <p class="gnote">${esc(p.n)}</p>
+      <div class="h3">Exemples</div>${exHTML(p)}
+    </div>`;
+  $("#ov").hidden = false; document.body.style.overflow = "hidden"; $("#d-x").focus();
+  $("#d-x").onclick = closeDetail;
+  $("#dlg").querySelectorAll(".speak").forEach(b => b.onclick = () => speak(b.dataset.say));
+}
+
+function gscopeHTML(p) {
+  const s = GS(), cats = GL[s.lvl] ? [...new Set(GL[s.lvl].map(x => x.c))] : [];
+  return `<span class="lbl">Je joue avec</span>
+    <label class="sr" for="${p}-lv">Niveau</label><select id="${p}-lv">${REGIONS.filter(r => GN[r.id]).map(r => `<option value="${r.id}" ${r.id === s.lvl ? "selected" : ""}>${r.lv} · ${GN[r.id]} points</option>`).join("")}</select>
+    <label class="sr" for="${p}-c">Catégorie</label><select id="${p}-c"><option value="all">Toutes les catégories</option>${cats.map(c => `<option ${c === s.c ? "selected" : ""}>${esc(c)}</option>`).join("")}</select>`;
+}
+function bindGScope(p, onChange) {
+  $(`#${p}-lv`).onchange = async e => { S.gsel = { lvl: e.target.value, c: "all" }; save(); await ensureGram(GS().lvl); onChange(); };
+  $(`#${p}-c`).onchange = e => { GS().c = e.target.value; save(); onChange(); };
+}
+
+/* grammar cards */
+let GC = null;
+async function renderGCards() {
+  await ensureGram(GS().lvl);
+  const due = gDueAll();
+  await Promise.all([...new Set(due.map(k => k.split("-")[0]))].map(ensureGram));
+  const scope = S.gcScope || "sel";
+  $("#gc-scope").innerHTML = `<div class="seg" role="group" aria-label="Paquet"><button id="gcs-sel" aria-pressed="${scope === "sel"}">Ma sélection</button><button id="gcs-due" aria-pressed="${scope === "due"}">Toutes mes révisions (${due.length})</button></div>${scope === "sel" ? gscopeHTML("gc") : ""}`;
+  $("#gcs-sel").onclick = () => { S.gcScope = "sel"; GC = null; save(); renderGCards(); };
+  $("#gcs-due").onclick = () => { S.gcScope = "due"; GC = null; save(); renderGCards(); };
+  if (scope === "sel") bindGScope("gc", () => { GC = null; renderGCards(); });
+  if (!GC) buildGDeck(false);
+  renderGCard();
+}
+function buildGDeck(all) {
+  const now = Date.now();
+  const src = S.gcScope === "due" ? gDueAll().filter(k => GBYK[k]).map(k => GBYK[k]) : gpool();
+  const due = shuffle(src.filter(p => S.gp && S.gp[p.id] && S.gp[p.id].seen && S.gp[p.id].due <= now));
+  const fresh = S.gcScope === "due" ? [] : src.filter(p => gstatus(p.id) === "new").slice(0, 6);
+  GC = { q: (all ? shuffle(src) : [...due, ...fresh]).map(p => p.id), flipped: false, reviewed: 0 };
+}
+function renderGCard() {
+  const st = $("#gstage");
+  if (!GC.q.length) {
+    st.innerHTML = `<div class="panel done-box"><svg class="mascot" viewBox="0 0 120 110" aria-hidden="true"><use href="#mochi"/></svg>
+      <h2>${GC.reviewed ? `Session terminée : ${plural(GC.reviewed, "point")} revu${GC.reviewed > 1 ? "s" : ""}` : "Rien à réviser ici pour l’instant"}</h2>
+      <p class="muted">Tu peux découvrir de nouveaux points ou revoir toute ta sélection librement.</p>
+      <div class="row" style="justify-content:center"><button class="btn go" id="gc-more">Nouveaux points</button><button class="btn" id="gc-free">Révision libre</button></div></div>`;
+    $("#gc-more").onclick = () => { S.gcScope = "sel"; buildGDeck(false); if (!GC.q.length) buildGDeck(true); renderGCards(); };
+    $("#gc-free").onclick = () => { S.gcScope = "sel"; buildGDeck(true); renderGCards(); };
+    return;
+  }
+  const p = GBYK[GC.q[0]], pr = S.gp && S.gp[p.id], isNew = !pr || !pr.seen;
+  const nb = Math.min(6, ((pr && pr.box) || 0) + 1), ni = INTERVALS[nb], e = p.ex[0];
+  st.innerHTML = `
+    <div class="row" style="justify-content:space-between;margin-bottom:12px"><span class="tag">${RG[p.l].lv} · ${esc(p.c)}</span><span class="muted" style="font-weight:800;font-size:13px;font-variant-numeric:tabular-nums">${GC.q.length} dans la pile · ${GC.reviewed} revus</span></div>
+    <div class="card" id="gcard" tabindex="0" role="button" aria-label="Retourner la carte">
+      <div class="card-in">
+        <div class="face front"><span class="tag ftag" style="${isNew ? "background:var(--sakura-soft)" : ""}">${isNew ? "Nouveau point" : "Révision"}</span><div class="gbig" style="text-align:center">${esc(p.p)}</div><div class="muted" style="margin-top:10px;font-weight:700">Que veut dire cette forme ?</div><span class="tap">Touche la carte ou <span class="kbd">Espace</span></span></div>
+        <div class="face back" style="justify-content:center;gap:6px">
+          <div class="meaning" style="padding:0;font-size:20px;text-align:center">${esc(p.m)}</div>
+          <div class="form-box" style="font-size:13.5px">${esc(p.f)}</div>
+          <div class="gj" style="margin-top:6px">${markEx(e[0])}</div><div class="gf">${esc(e[2])}</div>
+        </div>
+      </div>
+    </div>
+    <div class="grades" id="ggrades" hidden>
+      <button class="btn g-again" data-g="0">À revoir<small>tout à l’heure · 1</small></button>
+      <button class="btn g-hard" data-g="1">Difficile<small>demain · 2</small></button>
+      <button class="btn g-good" data-g="2">Je sais<small>${ni === 1 ? "demain" : `dans ${ni} jours`} · 3</small></button>
+    </div>
+    <div class="row" id="gflip-row" style="justify-content:center;margin-top:18px"><button class="btn go big" id="gc-flip">Voir la réponse</button></div>`;
+  GC.flipped = false;
+  const flip = () => { if (GC.flipped) return; GC.flipped = true; $("#gcard").classList.add("flip"); $("#ggrades").hidden = false; $("#gflip-row").hidden = true; $("#ggrades .g-good").focus({ preventScroll: true }); };
+  $("#gcard").onclick = flip; $("#gc-flip").onclick = flip;
+  $("#ggrades").onclick = ev => { const b = ev.target.closest("[data-g]"); if (b) ggrade(+b.dataset.g); };
+  GC.flip = flip;
+}
+function ggrade(g) {
+  const k = GC.q.shift(), p = GP(k), now = Date.now(), wasKnown = p.box >= 3;
+  p.seen = true; GC.reviewed++;
+  if (g === 0) { p.box = 0; p.due = now; GC.q.splice(Math.min(3, GC.q.length), 0, k); }
+  else if (g === 1) { p.box = Math.max(1, p.box); p.due = now + DAY; }
+  else { p.box = Math.min(6, p.box + 1); p.due = now + INTERVALS[p.box] * DAY - 36e5; }
+  bump("cards"); gain([2, 3, 5][g]);
+  if (!wasKnown && p.box >= 3) setTimeout(() => toast(`${GBYK[k].p} est maintenant acquis !`, "i-star"), 400);
+  save(); renderGCard();
+}
+
+/* grammar quiz */
+let GQ = null;
+async function renderGQuizView() {
+  await ensureGram(GS().lvl);
+  $("#gq-scope").innerHTML = gscopeHTML("gqz"); bindGScope("gqz", () => { GQ = null; renderGQuizView(); });
+  if (!GQ) buildGQuiz();
+  renderGQuiz();
+}
+function buildGQuiz(only) {
+  const pl = gpool(), all = GL[GS().lvl];
+  const src = only ? only.map(k => GBYK[k]) : shuffle(pl).slice(0, 10);
+  const qs = src.map((p, i) => {
+    const others = shuffle(all.filter(x => x.id !== p.id)).sort((a, b) => (b.c === p.c) - (a.c === p.c));
+    if (i % 3 === 2) return { p, prompt: `<div class="ask">Que veut dire…</div><div class="gbig" style="margin-top:6px">${esc(p.p)}</div>`, opts: pickOpts(p.m, others.map(x => x.m)), ans: p.m, cls: "" };
+    const e = p.ex[Math.random() * p.ex.length | 0], ans = blankOf(e[0]);
+    const cands = others.flatMap(x => x.ex.map(y => blankOf(y[0]))).filter(b => b !== ans && !e[0].includes("[" + b + "]"));
+    return { p, prompt: `<div class="ask">Complète la phrase</div><div class="gj big">${blankEx(e[0])}</div><div class="muted" style="margin-top:6px;font-weight:700">${esc(e[2])}</div>`, opts: pickOpts(ans, cands), ans, cls: "jp-opt", full: e };
+  });
+  GQ = { qs, i: 0, res: [], answered: false };
+}
+function renderGQuiz() {
+  const box = $("#gquizbox");
+  if (GQ.i >= GQ.qs.length) {
+    const ok = GQ.res.filter(Boolean).length, n = GQ.qs.length;
+    const missed = [...new Set(GQ.qs.filter((q, i) => !GQ.res[i]).map(q => q.p.id))];
+    box.innerHTML = `<div class="panel done-box"><svg class="mascot" viewBox="0 0 120 110" aria-hidden="true"><use href="#mochi"/></svg>
+      <span class="eyebrow">Résultat</span><div class="score">${ok}<span class="muted" style="font-size:26px"> / ${n}</span></div>
+      <p class="muted">${ok === n ? "Sans faute, bravo !" : ok >= n * .7 ? "Très bien. Revois les points ratés ci-dessous." : "On continue : revois ces points, puis relance un quiz."}</p>
+      ${missed.length ? `<span class="eyebrow">À revoir</span><div class="miss">${missed.map(k => `<button data-g="${k}"><span style="font-weight:800">${esc(GBYK[k].p)}</span></button>`).join("")}</div>` : ""}
+      <div class="row" style="justify-content:center;margin-top:8px">${missed.length ? `<button class="btn" id="gqz-miss">Refaire les ${missed.length} ratés</button>` : ""}<button class="btn go" id="gqz-new">Nouveau quiz</button></div></div>`;
+    box.querySelectorAll(".miss button").forEach(b => b.onclick = () => openGram(b.dataset.g));
+    $("#gqz-new").onclick = () => { buildGQuiz(); renderGQuiz(); };
+    if (missed.length) $("#gqz-miss").onclick = () => { buildGQuiz(missed); renderGQuiz(); };
+    return;
+  }
+  const q = GQ.qs[GQ.i];
+  box.innerHTML = `
+    <div class="qbar" aria-hidden="true">${GQ.qs.map((_, i) => `<i class="${i < GQ.i ? (GQ.res[i] ? "ok" : "ko") : i === GQ.i ? "cur" : ""}"></i>`).join("")}</div>
+    <div class="panel prompt" id="gprompt">${q.prompt}</div>
+    <div class="opts" role="group" aria-label="Réponses">${q.opts.map((o, i) => `<button class="opt ${q.cls}" data-i="${i}"><span class="k">${i + 1}</span><span>${esc(o)}</span></button>`).join("")}</div>
+    <div class="qfoot"><span class="muted" style="font-weight:800;font-variant-numeric:tabular-nums">Question ${GQ.i + 1} / ${GQ.qs.length}</span><span id="gqz-fb" aria-live="polite"></span><button class="btn go" id="gqz-next" hidden>Suivant</button></div>`;
+  GQ.answered = false;
+  box.querySelectorAll(".opt").forEach(b => b.onclick = () => ganswer(+b.dataset.i));
+  $("#gqz-next").onclick = () => { GQ.i++; if (GQ.i >= GQ.qs.length) { const ok = GQ.res.filter(Boolean).length; gain(ok * 4 + (ok === GQ.qs.length ? 20 : 0), ok === GQ.qs.length ? "quiz sans faute" : "quiz"); if (GQ.qs.length >= 7 && ok >= 7) bump("quiz"); } renderGQuiz(); };
+}
+function ganswer(i) {
+  if (GQ.answered) return; GQ.answered = true;
+  const q = GQ.qs[GQ.i], ok = q.opts[i] === q.ans, p = GP(q.p.id);
+  GQ.res[GQ.i] = ok; p.seen = true; ok ? p.ok++ : p.ko++; save();
+  $("#gquizbox").querySelectorAll(".opt").forEach((b, j) => { b.disabled = true; if (q.opts[j] === q.ans) b.classList.add("ok"); else if (j === i) b.classList.add("ko"); });
+  if (q.full) $("#gprompt .gj").innerHTML = markEx(q.full[0]);
+  $("#gqz-fb").innerHTML = ok ? `<b style="color:var(--ok)">Correct !</b>` : `<b style="color:var(--ko)">Raté</b> <span class="muted">· ${esc(q.p.p)}</span>`;
+  $("#gqz-next").hidden = false; $("#gqz-next").focus({ preventScroll: true });
+}
+document.addEventListener("keydown", e => {
+  if (!$("#ov").hidden || e.target.matches("input,select")) return;
+  if (current === "gcartes" && GC && GC.q.length) {
+    if (e.key === " " || e.key === "Enter") { if (!GC.flipped && !e.target.closest("button:not(#gcard)")) { e.preventDefault(); GC.flip(); } }
+    else if (GC.flipped && ["1", "2", "3"].includes(e.key)) ggrade(+e.key - 1);
+  }
+  if (current === "gquiz" && GQ && GQ.i < GQ.qs.length && !GQ.answered && ["1", "2", "3", "4"].includes(e.key)) ganswer(+e.key - 1);
+});
+function gramHomeHTML() {
+  const due = gDueAll().length;
+  return `<div class="row" style="justify-content:space-between;margin-top:6px"><h2>Grammaire</h2>${due ? `<button class="btn" id="h-grev"><svg><use href="#i-cards"/></svg>Réviser ${plural(due, "point")}</button>` : `<span class="muted" style="font-weight:700;font-size:13.5px">266 points, du N5 au N2</span>`}</div>
+    <div class="map">${REGIONS.filter(r => GN[r.id]).map(r => { const s = gLevelStats(r.id), n = GN[r.id]; return `
+      <button class="region" data-gr="${r.id}" style="--rc:${r.c}"><span class="medal">${r.kj}</span><span class="lv">${r.lv}</span><b>${n} points</b>
+        <span class="bar"><i style="width:${(s.known / n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(s.learn / n * 100).toFixed(1)}%;background:var(--amber)"></i></span>
+        <span class="nums"><span>${s.known} acquis</span><span>${s.learn} en cours</span></span></button>`; }).join("")}</div>`;
+}
+function bindGramHome(v) {
+  v.querySelectorAll("[data-gr]").forEach(b => b.onclick = () => { S.gsel = { lvl: b.dataset.gr, c: "all" }; GC = null; GQ = null; save(); location.hash = "grammaire"; });
+  const rb = v.querySelector("#h-grev"); if (rb) rb.onclick = () => { S.gcScope = "due"; GC = null; save(); location.hash = "gcartes"; };
+}
+function gramProfileHTML() {
+  return `<div class="panel pad"><h3 style="margin-bottom:6px">Grammaire par niveau</h3>
+    ${REGIONS.filter(r => GN[r.id]).map(r => { const s = gLevelStats(r.id), n = GN[r.id]; return `<div class="lvrow" style="--rc:${r.c}"><span class="kj">${r.kj}</span>
+      <div style="min-width:0"><b style="font-size:14px">${r.lv} · ${n} points</b><div class="bar" style="margin-top:4px"><i style="width:${(s.known / n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(s.learn / n * 100).toFixed(1)}%;background:var(--amber)"></i></div></div>
+      <span class="n">${s.known} / ${n}</span></div>`; }).join("")}</div>`;
+}
+
+/* ---------- routing ---------- */
+const VIEWS = ["accueil", "kanji", "trace", "cartes", "quiz", "profil", "vocab", "vcartes", "vquiz", "grammaire", "gcartes", "gquiz"];
+let current = null;
+async function route() {
+  const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "accueil";
+  const changed = v !== current; current = v;
+  VIEWS.forEach(x => { $("#v-" + x).hidden = x !== v; });
+  const nk = ["trace", "cartes", "quiz"].includes(v) ? "kanji" : ["vcartes", "vquiz"].includes(v) ? "vocab" : ["gcartes", "gquiz"].includes(v) ? "grammaire" : v;
+  document.querySelectorAll("nav.tabs a, nav.bottom a").forEach(a => a.dataset.v === nk ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  document.querySelectorAll(`#v-${v} .subnav-slot`).forEach(el => el.innerHTML = subnav(nk === "kanji" ? KSUB : nk === "vocab" ? VSUB : GSUB, v));
+  if (!$("#ov").hidden) closeDetail();
+  if (changed) window.scrollTo(0, 0);
+  renderHud();
+  try {
+    if (v === "accueil") { renderHome(); await ensureLevel(S.sel.lvl); if (current === "accueil") renderHome(); }
+    if (v === "kanji") await renderKanji();
+    if (v === "trace") await renderTrace();
+    if (v === "cartes") await renderCards();
+    if (v === "quiz") await renderQuizView();
+    if (v === "profil") renderProfile();
+    if (v === "vocab") await renderVocab();
+    if (v === "vcartes") await renderVCards();
+    if (v === "vquiz") await renderVQuizView();
+    if (v === "grammaire") await renderGram();
+    if (v === "gcartes") await renderGCards();
+    if (v === "gquiz") await renderGQuizView();
+  } catch (err) {
+    $("#v-" + v).insertAdjacentHTML("afterbegin", `<div class="empty">Impossible de charger les kanji (${esc(err.message)}). Recharge la page pour réessayer.</div>`);
+  }
+}
+window.addEventListener("hashchange", route);
+applyTheme(); dayState(); route();
+</script>
+
+<script>
+if ("serviceWorker" in navigator) addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+</script>
+</body>
+</html>
