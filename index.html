@@ -12,6 +12,7 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="firebase-config.js"></script>
 <style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
 <title>Kanji</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -456,6 +457,17 @@ header .hd{padding-block:10px}
 .av-pick button{border:2px solid var(--edge);background:var(--panel-2);border-radius:16px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:800;font-size:12px}
 .av-pick button svg{width:54px;height:54px}
 .av-pick button[aria-pressed="true"]{border-color:var(--leaf-deep);background:var(--leaf-soft)}
+/* account */
+.btn.google{width:100%;background:#fff;color:#3c4043;border-color:#dadce0}
+.btn.google svg{width:18px;height:18px}
+.or{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--ink-2);font-size:12.5px;font-weight:700}
+.or::before,.or::after{content:"";flex:1;border-top:2px dashed var(--edge)}
+.acct-form{display:flex;flex-direction:column;gap:6px}
+.acct-form label{font-size:12.5px;font-weight:800;color:var(--ink-2)}
+.acct-form input{border:2px solid var(--edge);background:var(--panel-2);border-radius:12px;padding:10px 12px;font:inherit;color:var(--ink);margin-bottom:6px}
+.acct-form .btn{margin-top:4px}
+.acct-err{background:var(--ko-soft);color:var(--ko);border-radius:10px;padding:8px 10px;font-size:13.5px;font-weight:700;margin:4px 0}
+.linkish{border:0;background:none;padding:4px 0;color:var(--leaf-deep);font-weight:800;font-size:13.5px;text-decoration:underline;text-underline-offset:3px}
 </style>
 </head>
 <body>
@@ -616,7 +628,8 @@ try { // reprend la progression de la première version
   const old = JSON.parse(localStorage.getItem("carnet-kanji-v1"));
   if (old && old.p && !S.migrated) { for (const k in old.p) if (!S.p[k]) S.p[k] = old.p[k]; S.migrated = true; }
 } catch (e) {}
-const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+const saveLocal = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+const save = () => { saveLocal(); if (window.__fbPush) window.__fbPush(); };
 const P = (k, l) => { const p = (S.p[k] ||= { box: 0, due: 0, seen: false, trace: 0, ok: 0, ko: 0 }); if (l) p.l = l; else if (!p.l && BYK[k]) p.l = BYK[k].l; return p; };
 const status = k => { const p = S.p[k]; if (!p || !p.seen) return "new"; return p.box >= 3 ? "known" : "learn"; };
 function dayState() {
@@ -1250,11 +1263,12 @@ function renderProfile() {
       <div class="line"><span style="font-weight:700">Apparence</span><div class="seg" role="group" aria-label="Apparence">${[["system", "Auto"], ["light", "Clair"], ["dark", "Sombre"]].map(([k, t]) => `<button data-th="${k}" aria-pressed="${(S.theme || "system") === k}">${t}</button>`).join("")}</div></div>
       <div class="line"><span style="font-weight:700">Cartes</span><div class="seg" role="group" aria-label="Sens des cartes"><button data-dir="k" aria-pressed="${S.dir === "k"}">Kanji → sens</button><button data-dir="m" aria-pressed="${S.dir === "m"}">Sens → kanji</button></div></div>
       <div class="line"><span style="font-weight:700">Tracé</span><div class="seg" role="group" aria-label="Mode de tracé"><button data-md="guide" aria-pressed="${S.mode === "guide"}">Guidé</button><button data-md="mem" aria-pressed="${S.mode === "mem"}">De mémoire</button></div></div>
-      <p class="muted" style="font-size:12.5px;margin:0">Ta progression est enregistrée dans ce navigateur, sur cet appareil uniquement.</p>
+      <p class="muted" style="font-size:12.5px;margin:0">${hasFbConfig() ? "Ta progression est enregistrée sur cet appareil, et dans ton compte si tu es connecté." : "Ta progression est enregistrée dans ce navigateur, sur cet appareil uniquement."}</p>
       <div id="p-reset-box"><button class="btn danger" id="p-reset">Effacer ma progression</button></div>
     </div>
     <p class="muted" style="font-size:12px;margin:0;text-align:center">Sources : ordre des traits KanjiVG (CC BY-SA 3.0) · kanji KANJIDIC2 et vocabulaire JMdict, EDRDG (CC BY-SA 4.0) · listes JLPT open-anki-jlpt-decks.</p>`;
-  v.children[2].insertAdjacentHTML("afterend", vocabProfileHTML() + gramProfileHTML());
+  v.children[0].insertAdjacentHTML("afterend", '<div class="panel pad" id="acct" hidden></div>'); renderAccount();
+  v.children[3].insertAdjacentHTML("afterend", vocabProfileHTML() + gramProfileHTML());
   $("#p-name").oninput = e => { S.name = e.target.value.trim(); save(); };
   $("#p-av").onclick = () => { const pk = $("#p-avpick"); pk.hidden = !pk.hidden; $("#p-av").setAttribute("aria-expanded", !pk.hidden); };
   v.querySelectorAll("[data-av]").forEach(b => b.onclick = () => { S.avatar = b.dataset.av; save(); renderProfile(); toast(`Nouvel avatar : ${AVATARS[S.avatar].n}`, "i-star"); });
@@ -1786,6 +1800,134 @@ function gramProfileHTML() {
       <span class="n">${s.known} / ${n}</span></div>`; }).join("")}</div>`;
 }
 
+
+/* ---------- ACCOUNT (Firebase) ---------- */
+const FB = { ready: false, failed: false, user: null, auth: null, db: null, lastSync: null, syncing: false, pushT: null, msg: "", mode: "login" };
+const SYNC_KEYS = ["p", "vp", "gp", "xp", "streak", "best", "lastDay", "name", "avatar", "day", "started", "sel", "vsel", "gsel", "dir", "vdir", "mode"];
+const hasFbConfig = () => !!(window.FIREBASE_CONFIG && window.FIREBASE_CONFIG.apiKey);
+function loadScript(src) { return new Promise((res, rej) => { const s = document.createElement("script"); s.src = src; s.onload = res; s.onerror = rej; document.head.appendChild(s); }); }
+async function initFirebase() {
+  if (!hasFbConfig() || FB.ready) return;
+  const base = "https://cdn.jsdelivr.net/npm/firebase@10.12.2/";
+  try {
+    await loadScript(base + "firebase-app-compat.js");
+    await Promise.all([loadScript(base + "firebase-auth-compat.js"), loadScript(base + "firebase-firestore-compat.js")]);
+    firebase.initializeApp(window.FIREBASE_CONFIG);
+    FB.auth = firebase.auth(); FB.db = firebase.firestore(); FB.ready = true;
+    FB.auth.onAuthStateChanged(async u => {
+      FB.user = u; FB.msg = "";
+      if (u) { try { await pullMerge(); } catch (e) { FB.msg = "La synchronisation a échoué. Vérifie ta connexion internet."; } }
+      renderAccount();
+    });
+  } catch (e) { FB.failed = true; renderAccount(); }
+}
+const dayNum = d => { if (!d) return 0; const [y, m, j] = d.split("-").map(Number); return new Date(y, m - 1, j).getTime(); };
+const score = x => (x.seen ? 100 : 0) + (x.box || 0) * 10 + Math.min(9, x.trace || 0);
+function mergeMap(a = {}, b = {}) {
+  const out = { ...a };
+  for (const k in b) {
+    const x = a[k], y = b[k];
+    if (!x) { out[k] = y; continue; }
+    const best = score(y) > score(x) || (score(y) === score(x) && (y.due || 0) > (x.due || 0)) ? { ...y } : { ...x };
+    best.ok = Math.max(x.ok || 0, y.ok || 0); best.ko = Math.max(x.ko || 0, y.ko || 0); best.trace = Math.max(x.trace || 0, y.trace || 0);
+    out[k] = best;
+  }
+  return out;
+}
+function mergeState(r) {
+  S.p = mergeMap(S.p, r.p); S.vp = mergeMap(S.vp, r.vp); S.gp = mergeMap(S.gp, r.gp);
+  S.xp = Math.max(S.xp || 0, r.xp || 0); S.best = Math.max(S.best || 0, r.best || 0);
+  if (dayNum(r.lastDay) > dayNum(S.lastDay)) { S.lastDay = r.lastDay; S.streak = r.streak || 0; }
+  else if (r.lastDay && r.lastDay === S.lastDay) S.streak = Math.max(S.streak || 0, r.streak || 0);
+  if (!S.name && r.name) S.name = r.name;
+  if (r.avatar && (!S.avatar || S.avatar === "chat")) S.avatar = r.avatar;
+  if (r.started) S.started = true;
+  if (r.day && S.day && r.day.date === S.day.date) { for (const q of ["trace", "cards", "quiz"]) S.day[q] = Math.max(S.day[q] || 0, r.day[q] || 0); S.day.done = [...new Set([...(S.day.done || []), ...(r.day.done || [])])]; }
+  else if (r.day && (!S.day || dayNum(r.day.date) > dayNum(S.day.date))) S.day = r.day;
+}
+async function pullMerge() {
+  if (!FB.user) return;
+  FB.syncing = true; renderAccount();
+  const ref = FB.db.collection("users").doc(FB.user.uid);
+  const snap = await ref.get();
+  if (snap.exists) { try { mergeState(JSON.parse(snap.data().state || "{}")); } catch (e) {} }
+  saveLocal(); await pushNow();
+  FB.syncing = false;
+  renderHud(); if (current) route();
+}
+async function pushNow() {
+  if (!FB.user || !FB.db) return;
+  const data = {}; SYNC_KEYS.forEach(k => { if (S[k] !== undefined) data[k] = S[k]; });
+  await FB.db.collection("users").doc(FB.user.uid).set({ state: JSON.stringify(data), updatedAt: firebase.firestore.FieldValue.serverTimestamp() });
+  FB.lastSync = Date.now();
+  const el = document.getElementById("acct-sync"); if (el) el.textContent = "Synchronisé à l’instant";
+}
+window.__fbPush = () => { if (!FB.user) return; clearTimeout(FB.pushT); FB.pushT = setTimeout(() => pushNow().catch(() => {}), 2500); };
+document.addEventListener("visibilitychange", () => { if (document.visibilityState === "hidden" && FB.user) { clearTimeout(FB.pushT); pushNow().catch(() => {}); } });
+const AUTH_ERR = {
+  "auth/email-already-in-use": "Un compte existe déjà avec cette adresse. Connecte-toi plutôt.",
+  "auth/invalid-email": "Cette adresse e-mail n’est pas valide.",
+  "auth/weak-password": "Le mot de passe doit faire au moins 6 caractères.",
+  "auth/invalid-credential": "Adresse ou mot de passe incorrect.",
+  "auth/wrong-password": "Adresse ou mot de passe incorrect.",
+  "auth/user-not-found": "Aucun compte avec cette adresse. Crée un compte.",
+  "auth/too-many-requests": "Trop d’essais. Réessaie dans quelques minutes.",
+  "auth/popup-closed-by-user": "La fenêtre de connexion a été fermée avant la fin.",
+  "auth/popup-blocked": "Ton navigateur a bloqué la fenêtre de connexion. Autorise les fenêtres pour ce site.",
+  "auth/network-request-failed": "Pas de connexion internet.",
+  "auth/unauthorized-domain": "Ce site n’est pas encore autorisé dans Firebase (Authentication → Paramètres → Domaines autorisés).",
+  "auth/requires-recent-login": "Par sécurité, déconnecte-toi puis reconnecte-toi avant de supprimer ton compte.",
+  "auth/missing-password": "Entre ton mot de passe.",
+};
+const authMsg = e => AUTH_ERR[e && e.code] || "Une erreur est survenue. Réessaie.";
+function renderAccount() {
+  const box = document.getElementById("acct"); if (!box) return;
+  if (!hasFbConfig()) { box.hidden = true; return; }
+  box.hidden = false;
+  if (FB.failed) { box.innerHTML = `<h3>Compte</h3><p class="muted" style="margin:6px 0 0">Le service de comptes est injoignable. Vérifie ta connexion internet puis recharge la page.</p>`; return; }
+  if (!FB.ready) { box.innerHTML = `<h3>Compte</h3><p class="muted" style="margin:6px 0 0">Chargement…</p>`; return; }
+  if (FB.user) {
+    const u = FB.user;
+    box.innerHTML = `<div class="row" style="justify-content:space-between"><h3>Compte</h3><span class="tag" style="border-color:var(--ok);color:var(--ok)"><svg style="width:14px;height:14px"><use href="#i-check"/></svg>Connecté</span></div>
+      <p style="margin:8px 0 2px;font-weight:800;overflow-wrap:anywhere">${esc(u.email || u.displayName || "Compte Google")}</p>
+      <p class="muted" id="acct-sync" style="margin:0 0 12px;font-size:13px;font-weight:700">${FB.syncing ? "Synchronisation…" : FB.lastSync ? "Synchronisé" : "Ta progression est sauvegardée automatiquement."}</p>
+      ${FB.msg ? `<p class="acct-err">${esc(FB.msg)}</p>` : ""}
+      <div class="row"><button class="btn" id="acct-sync-now"><svg><use href="#i-replay"/></svg>Synchroniser</button><button class="btn" id="acct-out">Se déconnecter</button></div>
+      <div id="acct-del-box" style="margin-top:12px"><button class="linkish" id="acct-del">Supprimer mon compte</button></div>`;
+    $("#acct-sync-now").onclick = async () => { FB.msg = ""; try { await pullMerge(); toast("Progression synchronisée", "i-check"); } catch (e) { FB.msg = "La synchronisation a échoué. Vérifie ta connexion internet."; renderAccount(); } };
+    $("#acct-out").onclick = async () => { clearTimeout(FB.pushT); try { await pushNow(); } catch (e) {} await FB.auth.signOut(); toast("Déconnecté. Ta progression reste aussi sur cet appareil.", "i-check"); };
+    $("#acct-del").onclick = () => {
+      $("#acct-del-box").innerHTML = `<div class="confirm"><b>Supprimer ton compte ?</b><p style="margin:4px 0 10px;font-size:13.5px">La sauvegarde en ligne sera effacée. Ta progression restera sur cet appareil.</p><div class="row"><button class="btn" id="acct-del-no">Annuler</button><button class="btn danger" id="acct-del-ok">Supprimer</button></div></div>`;
+      $("#acct-del-no").onclick = renderAccount;
+      $("#acct-del-ok").onclick = async () => { try { await FB.db.collection("users").doc(FB.user.uid).delete(); await FB.user.delete(); toast("Compte supprimé", "i-check"); } catch (e) { FB.msg = authMsg(e); renderAccount(); } };
+    };
+    return;
+  }
+  const create = FB.mode === "signup";
+  box.innerHTML = `<h3>Compte</h3>
+    <p class="muted" style="margin:6px 0 12px;font-size:14px">Crée un compte pour sauvegarder ta progression et la retrouver sur tous tes appareils.</p>
+    <button class="btn google" id="acct-google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M22.5 12.3c0-.8-.1-1.5-.2-2.2H12v4.2h5.9a5 5 0 0 1-2.2 3.3v2.7h3.5c2.1-1.9 3.3-4.7 3.3-8z"/><path fill="#34A853" d="M12 23c3 0 5.4-1 7.2-2.7l-3.5-2.7c-1 .7-2.2 1.1-3.7 1.1-2.9 0-5.3-1.9-6.2-4.5H2.2v2.8A11 11 0 0 0 12 23z"/><path fill="#FBBC05" d="M5.8 14.2a6.6 6.6 0 0 1 0-4.3V7.1H2.2a11 11 0 0 0 0 9.9z"/><path fill="#EA4335" d="M12 5.4c1.6 0 3.1.6 4.2 1.7l3.1-3.1A11 11 0 0 0 2.2 7.1l3.6 2.8C6.7 7.3 9.1 5.4 12 5.4z"/></svg>Continuer avec Google</button>
+    <div class="or"><span>ou avec ton e-mail</span></div>
+    <form id="acct-form" class="acct-form" novalidate>
+      <label for="acct-email">Adresse e-mail</label><input id="acct-email" type="email" autocomplete="email" required>
+      <label for="acct-pass">Mot de passe${create ? " (6 caractères minimum)" : ""}</label><input id="acct-pass" type="password" autocomplete="${create ? "new-password" : "current-password"}" required>
+      ${FB.msg ? `<p class="acct-err" role="alert">${esc(FB.msg)}</p>` : ""}
+      <button class="btn go" type="submit">${create ? "Créer mon compte" : "Se connecter"}</button>
+    </form>
+    <div class="row" style="justify-content:space-between;margin-top:10px">
+      <button class="linkish" id="acct-switch">${create ? "J’ai déjà un compte" : "Créer un compte"}</button>
+      ${create ? "" : `<button class="linkish" id="acct-reset">Mot de passe oublié ?</button>`}
+    </div>`;
+  $("#acct-google").onclick = async () => { FB.msg = ""; try { await FB.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider()); } catch (e) { FB.msg = authMsg(e); renderAccount(); } };
+  $("#acct-switch").onclick = () => { FB.mode = create ? "login" : "signup"; FB.msg = ""; renderAccount(); };
+  const rb = $("#acct-reset"); if (rb) rb.onclick = async () => { const em = $("#acct-email").value.trim(); if (!em) { FB.msg = "Entre ton adresse e-mail, puis touche « Mot de passe oublié »."; renderAccount(); return; } try { await FB.auth.sendPasswordResetEmail(em); toast("E-mail de réinitialisation envoyé", "i-check"); } catch (e) { FB.msg = authMsg(e); renderAccount(); } };
+  $("#acct-form").onsubmit = async e => {
+    e.preventDefault(); const em = $("#acct-email").value.trim(), pw = $("#acct-pass").value; FB.msg = "";
+    try { create ? await FB.auth.createUserWithEmailAndPassword(em, pw) : await FB.auth.signInWithEmailAndPassword(em, pw); }
+    catch (err) { FB.msg = authMsg(err); renderAccount(); const i = $("#acct-email"); if (i) i.value = em; }
+  };
+}
+
 /* ---------- routing ---------- */
 const VIEWS = ["accueil", "kanji", "trace", "cartes", "quiz", "profil", "vocab", "vcartes", "vquiz", "grammaire", "gcartes", "gquiz"];
 let current = null;
@@ -1817,7 +1959,7 @@ async function route() {
   }
 }
 window.addEventListener("hashchange", route);
-applyTheme(); dayState(); route();
+applyTheme(); dayState(); route(); initFirebase();
 </script>
 
 <script>
