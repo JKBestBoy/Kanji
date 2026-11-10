@@ -5,7 +5,9 @@ A mobile-first web app to learn Japanese:
 - **2,212 kanji** from JLPT N5 to N1, with animated stroke order and finger drawing practice that checks each stroke
 - **7,868 vocabulary words** from N5 to N1, sorted by type (verbs, adjectives, nouns…)
 - **356 grammar points** from N5 to N1, with explanations, example sentences and fill-in-the-blank quizzes
-- Spaced-repetition flashcards, quizzes, daily quests, XP and ranks
+- **20 graded reading texts** (N5 to N1) with furigana, audio and comprehension questions
+- Swipeable spaced-repetition flashcards; quizzes with multiple choice, typed answers (romaji or kana) and listening
+- Daily quests, XP, ranks, an activity calendar and progress charts
 - Optional account (Google or email) to back up progress and sync it across devices
 - Installable on your home screen and usable offline
 

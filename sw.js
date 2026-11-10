@@ -1,7 +1,7 @@
 // Offline support: caches the app and the levels already opened.
 // Bump the version below after every update.
-const CACHE = "kanji-v15";
-const SHELL = ["./", "index.html", "manifest.json", "icon-192.png", "icon-512.png", "data/n5.json", "data/v-n5.json", "data/g-n5.json", "data/g-n4.json", "data/g-n3.json", "data/g-n2.json", "data/g-n1.json"];
+const CACHE = "kanji-v16";
+const SHELL = ["./", "index.html", "manifest.json", "icon-192.png", "icon-512.png", "data/n5.json", "data/v-n5.json", "data/g-n5.json", "data/g-n4.json", "data/g-n3.json", "data/g-n2.json", "data/g-n1.json", "data/reading.json", "data/s-n5-0.json", "data/s-n5-1.json"];
 self.addEventListener("install", e => { e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL))); self.skipWaiting(); });
 self.addEventListener("activate", e => { e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))); self.clients.claim(); });
 self.addEventListener("fetch", e => {
