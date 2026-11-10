@@ -1,6 +1,6 @@
-// Configuration Firebase de l'app (comptes et sauvegarde en ligne).
-// Ces valeurs ne sont pas secrètes : elles identifient seulement le projet.
-// La sécurité des données est assurée par les règles Firestore (firestore.rules).
+// Firebase configuration (accounts and online backup).
+// These values are not secret: they only identify the project.
+// Data security is enforced by the Firestore rules (firestore.rules).
 window.FIREBASE_CONFIG = {
   apiKey: "AIzaSyChPihEtJC09sn4_WknUWOeBPtbdhC2hoE",
   authDomain: "kanji-ea6fa.firebaseapp.com",

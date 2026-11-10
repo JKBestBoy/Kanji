@@ -1,8 +1,8 @@
 {
   "name": "Kanji",
   "short_name": "Kanji",
-  "description": "Apprendre les kanji, le vocabulaire et la grammaire du japonais.",
-  "lang": "fr",
+  "description": "Learn Japanese kanji, vocabulary and grammar.",
+  "lang": "en",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
