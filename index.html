@@ -1518,7 +1518,7 @@ function vocabProfileHTML() {
 
 /* ---------- GRAMMAR ---------- */
 const GSUB = [["grammaire", "Liste"], ["gcartes", "Cartes"], ["gquiz", "Quiz"]];
-const GN = { n5: 50, n4: 46, n3: 80, n2: 90 };
+const GN = { n5: 50, n4: 46, n3: 80, n2: 90, n1: 90 };
 const GL = {}, GBYK = {}, gloading = {};
 function ensureGram(id) {
   if (GL[id]) return Promise.resolve(GL[id]);
@@ -1547,15 +1547,14 @@ async function renderGram() {
   const all = GL[s.lvl], st = gLevelStats(s.lvl), n = all.length;
   const cats = [...new Set(all.map(p => p.c))];
   v.innerHTML = `${subnav(GSUB, "grammaire")}
-    ${levelTabs(REGIONS, s.lvl, ["n5", "n4", "n3", "n2"])}
+    ${levelTabs(REGIONS, s.lvl)}
     <div class="panel pad banner" style="--rc:${r.c}"><span class="medal">${r.kj}</span>
       <div style="min-width:0"><span class="eyebrow">${r.lv} · ${n} points</span><h2>Grammaire ${r.lv}</h2>
       <div class="bar" style="margin-top:8px"><i style="width:${(st.known / n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(st.learn / n * 100).toFixed(1)}%;background:var(--amber)"></i></div>
       <div class="muted" style="font-size:12.5px;font-weight:700;margin-top:4px">${st.known} acquis · ${st.learn} en cours · ${n - st.known - st.learn} à découvrir</div></div></div>
     <div class="tchips" role="group" aria-label="Progression et filtre par catégorie">${[["all", "Tous"], ...cats.map(c => [c, c])].map(([c, lab]) => tcardHTML("c", c, lab, c === "all" ? all : all.filter(p => p.c === c), p => gstatus(p.id), s.c === c)).join("")}</div>
     <input class="search" id="gq" type="search" placeholder="Chercher une forme ou un sens (ex. てから, avant)" aria-label="Chercher un point de grammaire">
-    <div class="wlist" id="glist"></div>
-    <p class="muted" style="font-size:12.5px;text-align:center;margin:0">La grammaire N1 arrive bientôt.</p>`;
+    <div class="wlist" id="glist"></div>`;
   v.querySelectorAll(".reg-tab:not([disabled])").forEach(b => b.onclick = () => { S.gsel = { lvl: b.dataset.r, c: "all" }; GC = null; GQ = null; save(); renderGram(); });
   v.querySelectorAll(".tcard").forEach(b => b.onclick = () => { GS().c = b.dataset.c; GC = null; GQ = null; save(); renderGram(); });
   v.querySelectorAll(".play button").forEach(b => b.onclick = () => { GC = null; GQ = null; S.gcScope = "sel"; save(); location.hash = b.dataset.go; });
@@ -1735,7 +1734,7 @@ document.addEventListener("keydown", e => {
 });
 function gramHomeHTML() {
   const due = gDueAll().length;
-  return `<div class="row" style="justify-content:space-between;margin-top:6px"><h2>Grammaire</h2>${due ? `<button class="btn" id="h-grev"><svg><use href="#i-cards"/></svg>Réviser ${plural(due, "point")}</button>` : `<span class="muted" style="font-weight:700;font-size:13.5px">266 points, du N5 au N2</span>`}</div>
+  return `<div class="row" style="justify-content:space-between;margin-top:6px"><h2>Grammaire</h2>${due ? `<button class="btn" id="h-grev"><svg><use href="#i-cards"/></svg>Réviser ${plural(due, "point")}</button>` : `<span class="muted" style="font-weight:700;font-size:13.5px">356 points, du N5 au N1</span>`}</div>
     <div class="map">${REGIONS.filter(r => GN[r.id]).map(r => { const s = gLevelStats(r.id), n = GN[r.id]; return `
       <button class="region" data-gr="${r.id}" style="--rc:${r.c}"><span class="medal">${r.kj}</span><span class="lv">${r.lv}</span><b>${n} points</b>
         <span class="bar"><i style="width:${(s.known / n * 100).toFixed(1)}%;background:var(--leaf)"></i><i style="width:${(s.learn / n * 100).toFixed(1)}%;background:var(--amber)"></i></span>

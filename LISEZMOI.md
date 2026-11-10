@@ -1,12 +1,12 @@
 # Kanji — app d'apprentissage du japonais
 
-Application web autonome : 2 212 kanji (N5 à N1), 7 868 mots (N5 à N1) et 266 points de grammaire (N5 à N2),
+Application web autonome : 2 212 kanji (N5 à N1), 7 868 mots (N5 à N1) et 356 points de grammaire (N5 à N1),
 avec tracé, cartes en répétition espacée, quiz et profil.
 Elle s'installe sur un téléphone comme une app (PWA) et fonctionne hors ligne pour les niveaux déjà ouverts.
 
 ## Contenu du dossier
 - `index.html` : l'application
-- `data/` : kanji (`n5` … `n1`), vocabulaire (`v-n5` … `v-n1`), grammaire (`g-n5`, `g-n4`, `g-n3`, `g-n2`)
+- `data/` : kanji (`n5` … `n1`), vocabulaire (`v-n5` … `v-n1`), grammaire (`g-n5`, `g-n4`, `g-n3`, `g-n2`, `g-n1`)
 - `manifest.json`, `sw.js`, icônes : installation sur l'écran d'accueil et mode hors ligne
 - `.nojekyll` : nécessaire pour GitHub Pages (fichier caché, laisse-le)
 

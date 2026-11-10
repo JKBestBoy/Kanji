@@ -4,7 +4,7 @@ Application web pour apprendre le japonais, pensée pour le téléphone :
 
 - **2 212 kanji** du JLPT N5 au N1, avec l'ordre des traits animé et un tracé au doigt corrigé
 - **7 868 mots de vocabulaire** du N5 au N1, classés par type (verbes, adjectifs, noms…)
-- **266 points de grammaire** du N5 au N2, avec exemples et quiz à trous
+- **356 points de grammaire** du N5 au N1, avec exemples et quiz à trous
 - Cartes en répétition espacée, quiz, quêtes du jour, XP et profil
 - Installable sur l'écran d'accueil et utilisable hors ligne
 
