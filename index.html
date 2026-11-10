@@ -444,6 +444,18 @@ header .hd{padding-block:10px}
 .tcard .tb i{display:block;height:100%}
 .tcard[aria-pressed="true"]{border-color:var(--leaf-deep);background:var(--leaf-soft)}
 .tcard[aria-pressed="true"] .tn{color:var(--leaf-deep)}
+/* avatars */
+.avatar{position:relative;padding:0;overflow:visible;background:var(--panel-2);border:3px solid var(--leaf);display:block;cursor:pointer}
+.avatar > svg{width:100%;height:100%;display:block;border-radius:21px}
+.av-edit{position:absolute;right:-6px;bottom:-6px;width:26px;height:26px;border-radius:50%;background:var(--leaf);color:var(--on-leaf);display:grid;place-items:center;border:2px solid var(--panel)}
+.av-edit svg{width:13px;height:13px}
+.avatar.sm{width:52px;height:52px;border-radius:18px;border-width:2px;flex:none}
+.avatar.sm > svg{border-radius:16px}
+.greet{display:flex;align-items:center;gap:12px}
+.av-pick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.av-pick button{border:2px solid var(--edge);background:var(--panel-2);border-radius:16px;padding:8px 4px 6px;display:flex;flex-direction:column;align-items:center;gap:4px;font-weight:800;font-size:12px}
+.av-pick button svg{width:54px;height:54px}
+.av-pick button[aria-pressed="true"]{border-color:var(--leaf-deep);background:var(--leaf-soft)}
 </style>
 </head>
 <body>
@@ -777,7 +789,7 @@ function renderHome() {
   const [t1, t2] = mochiSays(), d = dayState(), due = dueAll().length;
   const ns = nextStage(), items = ns ? LV[S.sel.lvl].filter(x => x.g === ns) : [];
   v.innerHTML = `
-    <div><h1 style="font-size:26px">${esc(t1)}</h1><p class="muted" style="margin:2px 0 0;font-weight:700">${esc(t2)}</p></div>
+    <div class="greet"><a href="#profil" class="avatar sm" aria-label="Ton profil">${avatarSVG(S.avatar)}</a><div style="min-width:0"><h1 style="font-size:26px">${esc(t1)}</h1><p class="muted" style="margin:2px 0 0;font-weight:700">${esc(t2)}</p></div></div>
     <div class="home-row">
       <div class="panel pad">
         <div class="row" style="justify-content:space-between;margin-bottom:12px"><h3>Quêtes du jour</h3><span class="muted" style="font-weight:800;font-size:13px">${d.done.length} / 3</span></div>
@@ -1193,12 +1205,13 @@ function renderProfile() {
   v.innerHTML = `
     <div class="panel pad" style="display:flex;flex-direction:column;gap:14px">
       <div class="prof-top">
-        <div class="avatar" aria-hidden="true">${esc((S.name || "字").trim().charAt(0).toUpperCase() || "字")}</div>
+        <button class="avatar" id="p-av" aria-label="Changer d’avatar (actuel : ${esc((AVATARS[S.avatar] || AVATARS.chat).n)})" aria-expanded="false" aria-controls="p-avpick">${avatarSVG(S.avatar)}<span class="av-edit" aria-hidden="true"><svg><use href="#i-brush"/></svg></span></button>
         <div style="flex:1;min-width:0">
           <label class="eyebrow" for="p-name">Ton prénom</label>
-          <input class="name-in" id="p-name" maxlength="24" placeholder="Comment t’appelles-tu ?" value="${esc(S.name || "")}">
+          <input class="name-in" id="p-name" maxlength="24" placeholder="Ex. : Lina" value="${esc(S.name || "")}">
         </div>
       </div>
+      <div class="av-pick" id="p-avpick" role="group" aria-label="Choisir un avatar" hidden>${AV_IDS.map(id => `<button data-av="${id}" aria-pressed="${(S.avatar || "chat") === id}" title="${esc(AVATARS[id].n)}">${avatarSVG(id)}<span>${esc(AVATARS[id].n.split(" ")[0])}</span></button>`).join("")}</div>
       <div>
         <div class="row" style="justify-content:space-between;font-weight:800;font-size:13.5px"><span>Niveau ${l} · ${titleOf(l)}</span><span class="muted" style="font-variant-numeric:tabular-nums">${cur} / ${need} XP</span></div>
         <div class="bar" style="margin-top:5px"><i style="width:${(cur / need * 100).toFixed(1)}%;background:var(--amber)"></i></div>
@@ -1242,7 +1255,9 @@ function renderProfile() {
     </div>
     <p class="muted" style="font-size:12px;margin:0;text-align:center">Sources : ordre des traits KanjiVG (CC BY-SA 3.0) · kanji KANJIDIC2 et vocabulaire JMdict, EDRDG (CC BY-SA 4.0) · listes JLPT open-anki-jlpt-decks.</p>`;
   v.children[2].insertAdjacentHTML("afterend", vocabProfileHTML() + gramProfileHTML());
-  $("#p-name").oninput = e => { S.name = e.target.value.trim(); save(); v.querySelector(".avatar").textContent = (S.name || "字").charAt(0).toUpperCase(); };
+  $("#p-name").oninput = e => { S.name = e.target.value.trim(); save(); };
+  $("#p-av").onclick = () => { const pk = $("#p-avpick"); pk.hidden = !pk.hidden; $("#p-av").setAttribute("aria-expanded", !pk.hidden); };
+  v.querySelectorAll("[data-av]").forEach(b => b.onclick = () => { S.avatar = b.dataset.av; save(); renderProfile(); toast(`Nouvel avatar : ${AVATARS[S.avatar].n}`, "i-star"); });
   v.querySelectorAll("[data-th]").forEach(b => b.onclick = () => { S.theme = b.dataset.th; save(); applyTheme(); renderProfile(); });
   v.querySelectorAll("[data-dir]").forEach(b => b.onclick = () => { S.dir = b.dataset.dir; save(); renderProfile(); });
   v.querySelectorAll("[data-md]").forEach(b => b.onclick = () => { S.mode = b.dataset.md; save(); renderProfile(); });
@@ -1253,6 +1268,26 @@ function renderProfile() {
   };
 }
 
+
+
+/* ---------- AVATARS ---------- */
+const AV_EYE = "#3B2F29", AV_BLUSH = "#F2A7B5";
+const avEyes = (y = 56, dx = 12) => `<ellipse cx="${50 - dx}" cy="${y}" rx="3.6" ry="4.6" fill="${AV_EYE}"/><ellipse cx="${50 + dx}" cy="${y}" rx="3.6" ry="4.6" fill="${AV_EYE}"/><circle cx="${51.2 - dx}" cy="${y - 1.6}" r="1.2" fill="#fff"/><circle cx="${51.2 + dx}" cy="${y - 1.6}" r="1.2" fill="#fff"/>`;
+const avBlush = (y = 66, dx = 21) => `<ellipse cx="${50 - dx}" cy="${y}" rx="5" ry="3" fill="${AV_BLUSH}"/><ellipse cx="${50 + dx}" cy="${y}" rx="5" ry="3" fill="${AV_BLUSH}"/>`;
+const avMouth = (y = 66) => `<path d="M45 ${y} Q47.5 ${y + 3.5} 50 ${y} Q52.5 ${y + 3.5} 55 ${y}" fill="none" stroke="${AV_EYE}" stroke-width="1.8" stroke-linecap="round"/>`;
+const AVATARS = {
+  chat: { n: "Mochi le chat", bg: "#DDEBD3", s: `<svg x="6" y="10" width="88" height="81" viewBox="0 0 120 110" style="--white:#FFFFFF;--ink:#3B2F29;--sakura:#EE9DB0;--leaf:#5E9E5B"><use href="#mochi"/></svg>` },
+  renard: { n: "Renard", bg: "#FBE3CF", s: `<path d="M20 44 L28 12 L46 34Z M80 44 L72 12 L54 34Z" fill="#E8894A"/><path d="M26 38 L30 20 L40 33Z M74 38 L70 20 L60 33Z" fill="#FFE2C6"/><ellipse cx="50" cy="58" rx="32" ry="27" fill="#E8894A"/><path d="M22 62 Q36 58 50 72 Q64 58 78 62 Q72 86 50 86 Q28 86 22 62Z" fill="#FFF5EA"/>${avEyes(54)}<ellipse cx="50" cy="68" rx="3.4" ry="2.4" fill="${AV_EYE}"/>${avBlush(64, 23)}` },
+  panda: { n: "Panda", bg: "#E4E8EE", s: `<circle cx="25" cy="30" r="11" fill="#2E2A28"/><circle cx="75" cy="30" r="11" fill="#2E2A28"/><circle cx="50" cy="57" r="33" fill="#FAFAF7" stroke="#2E2A28" stroke-width="1.5"/><ellipse cx="37" cy="54" rx="8.5" ry="11" transform="rotate(-20 37 54)" fill="#2E2A28"/><ellipse cx="63" cy="54" rx="8.5" ry="11" transform="rotate(20 63 54)" fill="#2E2A28"/><circle cx="38" cy="53" r="3" fill="#fff"/><circle cx="62" cy="53" r="3" fill="#fff"/><ellipse cx="50" cy="66" rx="4" ry="2.8" fill="#2E2A28"/>${avBlush(70, 24)}` },
+  lapin: { n: "Lapin", bg: "#FBE3E8", s: `<ellipse cx="37" cy="24" rx="8" ry="21" fill="#FFFFFF" stroke="#E6D3D6" stroke-width="1.2"/><ellipse cx="63" cy="24" rx="8" ry="21" fill="#FFFFFF" stroke="#E6D3D6" stroke-width="1.2"/><ellipse cx="37" cy="25" rx="3.6" ry="14" fill="#F6BFCB"/><ellipse cx="63" cy="25" rx="3.6" ry="14" fill="#F6BFCB"/><ellipse cx="50" cy="63" rx="31" ry="27" fill="#FFFFFF" stroke="#E6D3D6" stroke-width="1.2"/>${avEyes(60)}<path d="M47 68 L53 68 L50 71Z" fill="#E98AA0"/>${avBlush(70, 22)}` },
+  tanuki: { n: "Tanuki", bg: "#EFE3D3", s: `<circle cx="27" cy="34" r="10" fill="#7A5A44"/><circle cx="73" cy="34" r="10" fill="#7A5A44"/><circle cx="27" cy="35" r="5" fill="#4A3A30"/><circle cx="73" cy="35" r="5" fill="#4A3A30"/><ellipse cx="50" cy="59" rx="33" ry="28" fill="#9C7458"/><path d="M20 56 Q34 44 50 56 Q66 44 80 56 Q66 66 50 60 Q34 66 20 56Z" fill="#4A3A30"/><circle cx="38" cy="55" r="4.2" fill="#fff"/><circle cx="62" cy="55" r="4.2" fill="#fff"/><circle cx="38.6" cy="55.4" r="2.4" fill="${AV_EYE}"/><circle cx="62.6" cy="55.4" r="2.4" fill="${AV_EYE}"/><ellipse cx="50" cy="72" rx="13" ry="10" fill="#F3E4CF"/><ellipse cx="50" cy="68" rx="3.6" ry="2.6" fill="${AV_EYE}"/>` },
+  grenouille: { n: "Grenouille", bg: "#DDEFD6", s: `<circle cx="32" cy="38" r="13" fill="#7DBF6E"/><circle cx="68" cy="38" r="13" fill="#7DBF6E"/><ellipse cx="50" cy="62" rx="36" ry="26" fill="#7DBF6E"/><circle cx="32" cy="37" r="8" fill="#fff"/><circle cx="68" cy="37" r="8" fill="#fff"/><circle cx="33" cy="38" r="4.2" fill="${AV_EYE}"/><circle cx="67" cy="38" r="4.2" fill="${AV_EYE}"/><path d="M34 66 Q50 78 66 66" fill="none" stroke="#3E6E3A" stroke-width="2.4" stroke-linecap="round"/>${avBlush(62, 26)}` },
+  chouette: { n: "Chouette", bg: "#EADFCF", s: `<path d="M24 34 L28 14 L40 28Z M76 34 L72 14 L60 28Z" fill="#8A6A4C"/><ellipse cx="50" cy="58" rx="32" ry="31" fill="#A9825F"/><circle cx="38" cy="52" r="13" fill="#F1E2C8"/><circle cx="62" cy="52" r="13" fill="#F1E2C8"/><circle cx="38" cy="52" r="6.5" fill="${AV_EYE}"/><circle cx="62" cy="52" r="6.5" fill="${AV_EYE}"/><circle cx="40" cy="50" r="2" fill="#fff"/><circle cx="64" cy="50" r="2" fill="#fff"/><path d="M46 62 L54 62 L50 70Z" fill="#E8A03E"/><path d="M36 76 Q40 80 44 76 M46 80 Q50 84 54 80 M56 76 Q60 80 64 76" fill="none" stroke="#7A5A40" stroke-width="1.6" stroke-linecap="round"/>` },
+  shiba: { n: "Shiba", bg: "#F6E6CF", s: `<path d="M20 46 L26 16 L44 32Z M80 46 L74 16 L56 32Z" fill="#E3A35B"/><path d="M26 40 L29 24 L38 32Z M74 40 L71 24 L62 32Z" fill="#F7D9B5"/><ellipse cx="50" cy="59" rx="33" ry="28" fill="#E3A35B"/><ellipse cx="50" cy="73" rx="20" ry="14" fill="#FFF6EA"/><ellipse cx="38" cy="47" rx="4" ry="2.2" fill="#FFF6EA"/><ellipse cx="62" cy="47" rx="4" ry="2.2" fill="#FFF6EA"/>${avEyes(56)}<ellipse cx="50" cy="67" rx="4" ry="2.8" fill="${AV_EYE}"/>${avMouth(71)}` },
+  daruma: { n: "Daruma", bg: "#F8E0DA", s: `<path d="M50 10 Q84 12 86 52 Q88 90 50 92 Q12 90 14 52 Q16 12 50 10Z" fill="#D2473B"/><ellipse cx="50" cy="46" rx="24" ry="20" fill="#FBEFE2"/><path d="M33 38 Q40 33 46 38 M54 38 Q60 33 67 38" fill="none" stroke="#2E2A28" stroke-width="3" stroke-linecap="round"/><circle cx="40" cy="46" r="4.6" fill="#2E2A28"/><circle cx="60" cy="46" r="4.6" fill="#2E2A28"/><path d="M44 57 Q50 54 56 57" fill="none" stroke="#2E2A28" stroke-width="2" stroke-linecap="round"/><path d="M36 74 Q50 80 64 74" fill="none" stroke="#F3C25F" stroke-width="3" stroke-linecap="round"/><circle cx="50" cy="80" r="3" fill="#F3C25F"/>` },
+};
+const AV_IDS = Object.keys(AVATARS);
+const avatarSVG = id => { const a = AVATARS[id] || AVATARS.chat; return `<svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="50" fill="${a.bg}"/>${a.s}</svg>`; };
 
 /* ---------- SUBNAV ---------- */
 const KSUB = [["kanji", "Liste"], ["trace", "Tracé"], ["cartes", "Cartes"], ["quiz", "Quiz"]];
